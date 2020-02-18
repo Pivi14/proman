@@ -24,6 +24,7 @@ export let dom = {
                     <button class="board-add">Add Card</button>
                     <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
                 </div>
+                <div class="board-columns" id="${board.id}"></div>
                 </section>
             `;
         }
@@ -36,6 +37,10 @@ export let dom = {
 
         let boardsContainer = document.querySelector('.board-container');
         boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
+
+        for (let board of boards) {
+            dom.loadCards(board.id);
+        }
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
@@ -46,6 +51,10 @@ export let dom = {
     showCards: function (cards) {
         // shows the cards of a board
         // it adds necessary event listeners also
+
+        for (let card in cards) {
+
+        }
     },
     // here comes more features
 };
