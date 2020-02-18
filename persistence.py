@@ -1,3 +1,4 @@
+import database_common
 import csv
 
 STATUSES_FILE = './data/statuses.csv'
