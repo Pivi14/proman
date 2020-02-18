@@ -16,6 +16,7 @@ export let dom = {
         // it adds necessary event listeners also
 
         let boardList = '';
+        let cardslist = '';
 
         for (let board of boards) {
             boardList += `
@@ -24,7 +25,7 @@ export let dom = {
                     <button class="board-add">Add Card</button>
                     <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
                 </div>
-                <div class="board-columns" id="${board.id}"></div>
+                <div class="board-columns ${board.id}" data-board-id="${board.id}"></div>
                 </section>
             `;
         }
@@ -45,14 +46,15 @@ export let dom = {
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
         dataHandler.getCardsByBoardId(boardId, function (cards) {
-            dom.showBoards(cards);
+            dom.showCards(cards);
         });
     },
     showCards: function (cards) {
         // shows the cards of a board
         // it adds necessary event listeners also
-
+        let boardcolumns = '';
         for (let card in cards) {
+            let columns=document.querySelector(`board-columns.${card.board_id}`)
 
         }
     },
