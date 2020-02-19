@@ -3,7 +3,7 @@ import {dataHandler} from "./data_handler.js";
 
 function new_board() {
     let user_title=prompt('Add title name please!');
-    dataHandler.createNewBoard(user_title,);
+    dataHandler.createNewBoard(user_title);
     dom.loadBoards()
 
 }
@@ -78,7 +78,7 @@ export let dom = {
         // This function should run once, when the page is loaded.
     },
     loadBoards: function () {
-        document.getElementById('board-container').innerHTML='';
+        // document.getElementById('board-container').innerHTML='';
         // retrieves boards and makes showBoards called
         dataHandler.getBoards(function (boards) {
             dom.showBoards(boards);
@@ -95,7 +95,8 @@ export let dom = {
             if (columns===null && card.col_id !== null){
                 build_column(card);
             }
-            if (card.id !== null){
+            let cards = document.getElementById(`card${card.id}`);
+            if (cards === null && card.id !== null){
                 build_card(card);
             }
 
