@@ -2,10 +2,10 @@
 import {dataHandler} from "./data_handler.js";
 
 
-function build_board(card) {
+function build_board(card, board) {
     let create_board = document.createElement('section');
     create_board.setAttribute('class', 'board');
-    create_board.id = `board${card.board_id}`;
+    create_board.id = `board${card.boardid}`;
     let board_header = document.createElement("div");
     board_header.setAttribute('class', 'board-header');
     let board_title = document.createElement('span');
@@ -82,7 +82,7 @@ export let dom = {
                 build_board(card);
             }
             let columns=document.getElementById(`col${card.col_id}`);
-            if (columns===null){
+            if (columns===null && card.col_id !== null){
                 build_column(card);
             }
             build_card(card);
