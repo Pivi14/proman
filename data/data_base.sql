@@ -9,19 +9,19 @@ ALTER TABLE IF EXISTS ONLY public.cards DROP CONSTRAINT IF EXISTS cards_col_id_f
 DROP TABLE IF EXISTS boards;
 DROP SEQUENCE IF EXISTS public.boards_id_seq;
 CREATE TABLE public.boards (
-    id serial,
+    board_id serial,
     title text,
-    PRIMARY KEY (id)
+    PRIMARY KEY (board_id)
 );
 
 DROP TABLE IF EXISTS cols;
 DROP SEQUENCE IF EXISTS public.cols_id_seq;
 CREATE TABLE public.cols (
-    id serial,
+    col_id serial,
     col_title text,
     board_id int,
-    PRIMARY KEY (id),
-    FOREIGN KEY (board_id) REFERENCES boards(id)
+    PRIMARY KEY (col_id),
+    FOREIGN KEY (board_id) REFERENCES boards(board_id)
 );
 
 DROP TABLE IF EXISTS cards;
@@ -33,8 +33,8 @@ CREATE TABLE public.cards (
     col_id int,
     order_num int,
     PRIMARY KEY (id),
-    FOREIGN KEY (board_id) REFERENCES boards(id),
-    FOREIGN KEY (col_id) REFERENCES cols(id)
+    FOREIGN KEY (board_id) REFERENCES boards(board_id),
+    FOREIGN KEY (col_id) REFERENCES cols(col_id)
 );
 
 INSERT INTO boards VALUES (1, 'Board 1');
