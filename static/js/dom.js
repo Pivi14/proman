@@ -1,6 +1,12 @@
 // It uses data_handler.js to visualize elements
 import {dataHandler} from "./data_handler.js";
 
+function new_board() {
+
+
+}
+
+
 
 function build_board(card) {
     let create_board = document.createElement('section');
@@ -74,6 +80,7 @@ export let dom = {
         dataHandler.getBoards(function (boards) {
             dom.showBoards(boards);
         });
+        document.getElementById('create-board').addEventListener('click',new_board)
     },
     showBoards: function (boards) {
         for (let card of Object.values(boards)){
