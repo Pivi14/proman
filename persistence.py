@@ -1,9 +1,9 @@
 import database_common
 import csv
 
-STATUSES_FILE = './data/statuses.csv'
-BOARDS_FILE = './data/boards.csv'
-CARDS_FILE = './data/cards.csv'
+STATUSES_FILE = '/home/bala/Documents/Codecool/Web/proman/data/statuses.csv'
+BOARDS_FILE = '/home/bala/Documents/Codecool/Web/proman/data/boards.csv'
+CARDS_FILE = '/home/bala/Documents/Codecool/Web/proman/data/cards.csv'
 
 _cache = {}  # We store cached data in this dict to avoid multiple file readings
 
