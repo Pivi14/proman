@@ -10,9 +10,6 @@ def get_boards(cursor):
                     FROM boards 
                     FULL JOIN cols ON  cols.board_id = boards.board_id
                     FULL JOIN cards ON cards.board_id = boards.board_id AND cards.col_id = cols.col_id
-                    ORDER BY boards.board_id, cols.col_id, cards.order_num
-                    """
-
-                   )
+                    ORDER BY boards.board_id, cols.col_id, cards.order_num;
+                    """)
     return cursor.fetchall()
-

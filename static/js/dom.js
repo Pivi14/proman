@@ -74,6 +74,7 @@ export let dom = {
         dataHandler.getBoards(function (boards) {
             dom.showBoards(boards);
         });
+
     },
     showBoards: function (boards) {
         for (let card of Object.values(boards)){
