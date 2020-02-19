@@ -47,6 +47,24 @@ function build_column(card) {
     document.getElementById(`board-columns${card.board_id}`).appendChild(board_column);
 }
 
+function build_card(card) {
+    let individual_card = document.createElement('div');
+    individual_card.setAttribute('class', 'card');
+    individual_card.id = `card${card.id}`;
+    let card_remove = document.createElement('div');
+    card_remove.setAttribute('class', 'card-remove');
+    let image = document.createElement('i');
+    image.setAttribute('class', 'fas fa-trash-alt');
+    let card_title = document.createElement('div');
+    card_title.setAttribute('class', 'card-title');
+    card_title.innerText = card.card_title;
+
+    card_remove.appendChild(image);
+    individual_card.appendChild(card_remove);
+    individual_card.appendChild(card_title);
+    document.getElementById(`board-column-content${card.col_id}`).appendChild(individual_card);
+}
+
 export let dom = {
     init: function () {
         // This function should run once, when the page is loaded.
@@ -67,21 +85,7 @@ export let dom = {
             if (columns===null){
                 build_column(card);
             }
-            let individual_card=document.createElement('div');
-            individual_card.setAttribute('class','card');
-            individual_card.id=`card${card.id}`;
-            let card_remove=document.createElement('div');
-            card_remove.setAttribute('class','card-remove');
-            let image=document.createElement('i');
-            image.setAttribute('class','fas fa-trash-alt');
-            let card_title=document.createElement('div');
-            card_title.setAttribute('class','card-title');
-            card_title.innerText=card.card_title;
-
-            card_remove.appendChild(image);
-            individual_card.appendChild(card_remove);
-            individual_card.appendChild(card_title);
-            document.getElementById(`board-column-content${card.col_id}`).appendChild(individual_card);
+            build_card(card);
 
 
         }
