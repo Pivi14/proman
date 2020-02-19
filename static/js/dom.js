@@ -12,7 +12,7 @@ export let dom = {
         });
     },
     showBoards: function (boards) {
-        for (let card in Object.values(boards)){
+        for (let card of Object.values(boards)){
             console.log(card);
             let board = document.getElementById(`board${card.board_id}`);
             if (board === null) {
