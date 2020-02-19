@@ -11,6 +11,9 @@ def get_card_status(status_id):
     statuses = persistence.get_statuses()
     return next((status['title'] for status in statuses if status['id'] == str(status_id)), 'Unknown')
 
+def new_board(title):
+    sql_querries.create_board(title)
+
 
 def get_boards():
     """

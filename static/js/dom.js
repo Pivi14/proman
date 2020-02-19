@@ -1,6 +1,14 @@
 // It uses data_handler.js to visualize elements
 import {dataHandler} from "./data_handler.js";
 
+function new_board() {
+    let user_title=prompt('Add title name please!');
+    dataHandler.createNewBoard(user_title,);
+    dom.loadBoards()
+
+}
+
+
 
 function build_board(card) {
     let create_board = document.createElement('section');
@@ -70,10 +78,12 @@ export let dom = {
         // This function should run once, when the page is loaded.
     },
     loadBoards: function () {
+        document.getElementById('board-container').innerHTML='';
         // retrieves boards and makes showBoards called
         dataHandler.getBoards(function (boards) {
             dom.showBoards(boards);
         });
+        document.getElementById('create-board').addEventListener('click',new_board)
     },
     showBoards: function (boards) {
         for (let card of Object.values(boards)){

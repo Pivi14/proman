@@ -5,7 +5,7 @@ import psycopg2
 @database_common.connection_handler
 def get_boards(cursor):
     cursor.execute("""
-                    SELECT boards.board_id, boards.title, cols.col_id, cols.col_title, cols.board_id, cards.id,
+                    SELECT boards.board_id, boards.title, cols.col_id, cols.col_title, cards.id,
                      cards.card_title, cards.order_num
                     FROM boards 
                     FULL JOIN cols ON  cols.board_id = boards.board_id
@@ -15,4 +15,12 @@ def get_boards(cursor):
 
                    )
     return cursor.fetchall()
+
+
+@database_common.connection_handler
+def create_board(cursor, title):
+    cursor.execute("""
+                   INSERT INTO boards(title) VALUES (%(title)s) """,
+                   {'title': title}
+                   )
 
