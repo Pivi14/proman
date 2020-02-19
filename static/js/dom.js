@@ -5,7 +5,7 @@ import {dataHandler} from "./data_handler.js";
 function build_board(card, board) {
     let create_board = document.createElement('section');
     create_board.setAttribute('class', 'board');
-    create_board.id = `board${card.boardid}`;
+    create_board.id = `board${card.board_id}`;
     let board_header = document.createElement("div");
     board_header.setAttribute('class', 'board-header');
     let board_title = document.createElement('span');
