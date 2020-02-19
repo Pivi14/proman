@@ -85,7 +85,9 @@ export let dom = {
             if (columns===null && card.col_id !== null){
                 build_column(card);
             }
-            build_card(card);
+            if (card.id !== null){
+                build_card(card);
+            }
 
 
         }

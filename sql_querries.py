@@ -5,11 +5,12 @@ import psycopg2
 @database_common.connection_handler
 def get_boards(cursor):
     cursor.execute("""
-                    SELECT boards.id AS boardID, boards.title, cols.id, cols.col_title, cols.board_id, cards.id, cards.board_id,
-                     cards.card_title, cards.col_id, cards.order_num
-                    FROM cards FULL JOIN boards ON cards.board_id = boards.id
-                    FULL JOIN cols ON cards.col_id = cols.id
-                    ORDER BY boards.id, cols.id, cards.order_num
+                    SELECT boards.board_id, boards.title, cols.col_id, cols.col_title, cols.board_id, cards.id,
+                     cards.card_title, cards.order_num
+                    FROM boards 
+                    FULL JOIN cols ON  cols.board_id = boards.board_id
+                    FULL JOIN cards ON cards.board_id = boards.board_id AND cards.col_id = cols.col_id
+                    ORDER BY boards.board_id, cols.col_id, cards.order_num
                     """
 
                    )
