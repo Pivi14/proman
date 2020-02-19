@@ -37,27 +37,27 @@ CREATE TABLE public.cards (
     FOREIGN KEY (col_id) REFERENCES cols(col_id)
 );
 
-INSERT INTO boards VALUES (1, 'Board 1');
-INSERT INTO boards VALUES (2, 'Board 2');
+INSERT INTO boards VALUES (0, 'Board 1');
+INSERT INTO boards VALUES (1, 'Board 2');
 
-INSERT INTO cols VALUES (0, 'New', 1);
-INSERT INTO cols VALUES (1, 'In progress', 1);
-INSERT INTO cols VALUES (2, 'Testing', 1);
-INSERT INTO cols VALUES (3, 'Done', 1);
-INSERT INTO cols VALUES (4, 'New', 2);
-INSERT INTO cols VALUES (5, 'In progress', 2);
-INSERT INTO cols VALUES (6, 'Testing', 2);
-INSERT INTO cols VALUES (7, 'Done', 2);
+INSERT INTO cols VALUES (0, 'New', 0);
+INSERT INTO cols VALUES (1, 'In progress', 0);
+INSERT INTO cols VALUES (2, 'Testing', 0);
+INSERT INTO cols VALUES (3, 'Done', 0);
+INSERT INTO cols VALUES (4, 'New', 1);
+INSERT INTO cols VALUES (5, 'In progress', 1);
+INSERT INTO cols VALUES (6, 'Testing', 1);
+INSERT INTO cols VALUES (7, 'Done', 1);
 
-INSERT INTO cards VALUES (1, 1, 'New card', 0, 0);
-INSERT INTO cards VALUES (2, 1, 'New card2', 0, 1);
-INSERT INTO cards VALUES (3, 1, 'In progress card', 1, 0);
-INSERT INTO cards VALUES (4, 1, 'Planning', 2, 0);
-INSERT INTO cards VALUES (5, 1, 'Done card1', 3, 0);
-INSERT INTO cards VALUES (6, 1, 'Done card1', 3, 1);
-INSERT INTO cards VALUES (7, 2, 'New card1', 4, 0);
-INSERT INTO cards VALUES (8, 2, 'New card2', 4, 1);
-INSERT INTO cards VALUES (9, 2, 'In progress card', 5, 0);
-INSERT INTO cards VALUES (10, 2, 'Planning', 6, 0);
-INSERT INTO cards VALUES (11, 2, 'Done card1', 7, 0);
-INSERT INTO cards VALUES (12, 2, 'Done card1', 7, 1);
+INSERT INTO cards VALUES (1, 0, 'New card', 0, 0);
+INSERT INTO cards VALUES (2, 0, 'New card2', 0, 1);
+INSERT INTO cards VALUES (3, 0, 'In progress card', 1, 0);
+INSERT INTO cards VALUES (4, 0, 'Planning', 2, 0);
+INSERT INTO cards VALUES (5, 0, 'Done card1', 3, 0);
+INSERT INTO cards VALUES (6, 0, 'Done card1', 3, 1);
+INSERT INTO cards VALUES (7, 1, 'New card1', 4, 0);
+INSERT INTO cards VALUES (8, 1, 'New card2', 4, 1);
+INSERT INTO cards VALUES (9, 1, 'In progress card', 5, 0);
+INSERT INTO cards VALUES (10, 1, 'Planning', 6, 0);
+INSERT INTO cards VALUES (11, 1, 'Done card1', 7, 0);
+INSERT INTO cards VALUES (12, 1, 'Done card1', 7, 1);

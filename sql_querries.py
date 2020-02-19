@@ -19,7 +19,7 @@ def get_boards(cursor):
 
 @database_common.connection_handler
 def create_board(cursor, title):
+    print(type(title))
     cursor.execute("""
-                   INSERT INTO boards VALUES (%(title)s) """,
-                   {'title': title}
-                   )
+                   INSERT INTO boards (title) VALUES (%(title)s);
+                   """, {'title': title})

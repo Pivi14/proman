@@ -15,10 +15,13 @@ def index():
 
 
 @app.route("/new-board", methods=['POST'])
+@json_response
 def new_board():
-    a = request.json['title']
-    print(a)
-    # data_handler.new_board()
+    board_title = request.json['title']
+
+    data_handler.new_board(str(board_title))
+    print(board_title)
+    return board_title
 
 
 @app.route("/get-boards")

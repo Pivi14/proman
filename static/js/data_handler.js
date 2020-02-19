@@ -27,10 +27,12 @@ export let dataHandler = {
                 // 'Content-Type': 'application/x-www-form-urlencoded',
             },
             body: JSON.stringify(data),
-        });
-
+        })
+            .then(response => response.json())
+            .then(function (data) {
+                console.log(data)
+            });
         callback();
-
     },
     init: function () {
     },
