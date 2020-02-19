@@ -2,11 +2,9 @@
 import {dataHandler} from "./data_handler.js";
 
 function new_board() {
-
-
+    let boardTitle = 'New board';
+    dataHandler.createNewBoard(boardTitle, dom.loadBoards);
 }
-
-
 
 function build_board(card) {
     let create_board = document.createElement('section');
@@ -25,7 +23,7 @@ function build_board(card) {
     let image = document.createElement('i');
     image.setAttribute('class', 'fas fa-chevron-down');
     let board_columns = document.createElement('div');
-    board_columns.id=`board-columns${card.board_id}`;
+    board_columns.id = `board-columns${card.board_id}`;
     board_columns.setAttribute('class', 'board-columns');
     board_toggle.appendChild(image);
     board_header.appendChild(board_title);
@@ -74,25 +72,26 @@ function build_card(card) {
 export let dom = {
     init: function () {
         // This function should run once, when the page is loaded.
+        document.getElementById('create-board').addEventListener('click', new_board)
     },
     loadBoards: function () {
         // retrieves boards and makes showBoards called
         dataHandler.getBoards(function (boards) {
             dom.showBoards(boards);
         });
-        document.getElementById('create-board').addEventListener('click',new_board)
     },
     showBoards: function (boards) {
-        for (let card of Object.values(boards)){
+        for (let card of Object.values(boards)) {
             let board = document.getElementById(`board${card.board_id}`);
             if (board === null) {
                 build_board(card);
             }
-            let columns=document.getElementById(`col${card.col_id}`);
-            if (columns===null && card.col_id !== null){
+            let columns = document.getElementById(`col${card.col_id}`);
+            if (columns === null && card.col_id !== null) {
                 build_column(card);
             }
-            if (card.id !== null){
+            let currentCard = document.getElementById(`card${card.id}`);
+            if (currentCard === null && card.id !== null) {
                 build_card(card);
             }
 
@@ -110,7 +109,7 @@ export let dom = {
         // it adds necessary event listeners also
         let boardcolumns = '';
         for (let card in cards) {
-            let columns=document.querySelector(`board-columns.${card.board_id}`)
+            let columns = document.querySelector(`board-columns.${card.board_id}`)
 
         }
     },
