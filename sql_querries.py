@@ -24,16 +24,30 @@ def create_board(cursor, title):
                    {'title': title}
                    )
 
+
+@database_common.connection_handler
+def create_card(cursor, card_data):
+    cursor.execute("""
+                    INSERT INTO cards(board_id, card_title, col_id, order_num) VALUES (%(board_id)s, %(card_title)s, %(col_id)s, %(order_num)s)
+    """, {
+        'board_id': card_data['board_id'],
+        'card_title': card_data['card_title'],
+        'col_id': card_data['col_id'],
+        'order_num': card_data['order_num']
+    })
+
+
 @database_common.connection_handler
 def col_by_board_id(cursor, board_id):
     cursor.execute("""
                     SELECT col_id
                     FROM cols
                     WHERE board_id = %(board_id)s
-                    ORDER BY col_id DESC
+                    ORDER BY col_id
                     LIMIT 1
     """, {'board_id': board_id})
     return cursor.fetchone()
+
 
 @database_common.connection_handler
 def order_by_col_id(cursor, col_id):
