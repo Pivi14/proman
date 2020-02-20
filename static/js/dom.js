@@ -2,8 +2,8 @@
 import {dataHandler} from "./data_handler.js";
 
 function new_board() {
-    let user_title=prompt('Add title name please!');
-    if (user_title === ''){
+    let user_title = prompt('Add title name please!');
+    if (user_title === '') {
         user_title = 'New Board'
     }
     dataHandler.createNewBoard(user_title);
@@ -13,9 +13,9 @@ function new_board() {
 
 }
 
-function create_card(board_id){
+function create_card(board_id) {
     let card_title = prompt('Give me the card title!');
-    if (card_title === ''){
+    if (card_title === '') {
         card_title = 'New card'
     }
     let card = {
@@ -27,23 +27,26 @@ function create_card(board_id){
         dom.loadBoards()
     }, 200)
 }
+
 function isNullOrWhiteSpace(str) {
-  return (!str || str.length === 0 || /^\s*$/.test(str))
+    return (!str || str.length === 0 || /^\s*$/.test(str))
 }
 
 function board_close() {
     let board_id = this.getAttribute('data-board-id');
     let board_columns = document.getElementById(`board-columns${board_id}`);
+    let board_columns_height = board_columns.offsetHeight;
+    board_columns.setAttribute('data-board-height', `${board_columns_height}`);
     let elements = board_columns.childNodes;
-    if (elements.length !== 0){
+    if (elements.length !== 0) {
         board_columns.animate([
-            {height: "100px"},
+            {height: `${board_columns_height}px`},
             {height: "0px"}
         ], {
             duration: 500
         });
         setTimeout(function () {
-            for (let element of elements){
+            for (let element of elements) {
                 element.style.display = 'none'
             }
         }, 250);
@@ -54,18 +57,19 @@ function board_close() {
     }
 }
 
-function board_open(){
+function board_open() {
     let board_id = parseInt(this.dataset.boardId);
     let board_columns = document.getElementById(`board-columns${board_id}`);
+    let board_columns_height = board_columns.getAttribute('data-board-height');
     let elements = board_columns.childNodes;
     board_columns.animate([
         {height: "0px"},
-        {height: '100px'}
-    ],{
+        {height: `${board_columns_height}px`}
+    ], {
         duration: 500
     });
     setTimeout(function () {
-        for (let element of elements){
+        for (let element of elements) {
             element.style.display = 'block'
         }
     }, 250);
@@ -89,17 +93,19 @@ function build_board(card) {
     board_title.contentEditable = true;
     board_title.tabIndex = 1;
     board_title.innerText = card.title;
-    board_title.addEventListener("focusout",function () {
-        if ( isNullOrWhiteSpace(board_title.innerText) === false) {
-            dataHandler.changeBoardName(parseInt(board_title.id.slice(5)),board_title.innerText)}
-        else{
+    board_title.addEventListener("focusout", function () {
+        if (isNullOrWhiteSpace(board_title.innerText) === false) {
+            dataHandler.changeBoardName(parseInt(board_title.id.slice(5)), board_title.innerText)
+        } else {
             board_title.innerText = card.title
         }
     });
     let board_add = document.createElement('button');
     board_add.setAttribute('class', 'board-add');
     board_add.innerText = 'Add Card';
-    board_add.addEventListener('click', function (){create_card(card.board_id)});
+    board_add.addEventListener('click', function () {
+        create_card(card.board_id)
+    });
     let board_toggle = document.createElement('button');
     board_toggle.setAttribute('class', 'board-toggle');
     board_toggle.id = `toggle${card.board_id}`;
@@ -109,7 +115,7 @@ function build_board(card) {
     image.setAttribute('class', 'fas fa-chevron-down');
     image.id = `chevron-image${card.board_id}`;
     let board_columns = document.createElement('div');
-    board_columns.id=`board-columns${card.board_id}`;
+    board_columns.id = `board-columns${card.board_id}`;
     board_columns.setAttribute('class', 'board-columns');
     board_toggle.appendChild(image);
     board_header.appendChild(board_title);
@@ -165,20 +171,20 @@ export let dom = {
         dataHandler.getBoards(function (boards) {
             dom.showBoards(boards);
         });
-        document.getElementById('create-board').addEventListener('click',new_board)
+        document.getElementById('create-board').addEventListener('click', new_board)
     },
     showBoards: function (boards) {
-        for (let card of Object.values(boards)){
+        for (let card of Object.values(boards)) {
             let board = document.getElementById(`board${card.board_id}`);
             if (board === null) {
                 build_board(card);
             }
-            let columns=document.getElementById(`col${card.col_id}`);
-            if (columns===null && card.col_id !== null){
+            let columns = document.getElementById(`col${card.col_id}`);
+            if (columns === null && card.col_id !== null) {
                 build_column(card);
             }
             let cards = document.getElementById(`card${card.id}`);
-            if (cards === null && card.id !== null){
+            if (cards === null && card.id !== null) {
                 build_card(card);
             }
 
@@ -196,7 +202,7 @@ export let dom = {
         // it adds necessary event listeners also
         let boardcolumns = '';
         for (let card in cards) {
-            let columns=document.querySelector(`board-columns.${card.board_id}`)
+            let columns = document.querySelector(`board-columns.${card.board_id}`)
 
         }
     },
