@@ -6,7 +6,11 @@ function new_board() {
     if (user_title === '') {
         user_title = 'New Board'
     }
-    dataHandler.createNewBoard(user_title, dom.loadBoards);
+    dataHandler.createNewBoard(user_title);
+    setTimeout(function () {
+        dom.loadBoards()
+    }, 200)
+
 }
 
 function create_card(board_id) {
@@ -28,7 +32,8 @@ function isNullOrWhiteSpace(str) {
     return (!str || str.length === 0 || /^\s*$/.test(str))
 }
 
-function chevron_down(board_id) {
+function board_close() {
+    let board_id = this.getAttribute('data-board-id');
     let board_columns = document.getElementById(`board-columns${board_id}`);
     let elements = board_columns.childNodes;
     if (elements.length !== 0) {
@@ -45,12 +50,13 @@ function chevron_down(board_id) {
         }, 250);
         document.getElementById(`chevron-image${board_id}`).classList.remove('fa-chevron-down');
         document.getElementById(`chevron-image${board_id}`).classList.add('fa-chevron-up');
-        document.getElementById(`toggle${board_id}`).removeEventListener('click', chevron_down);
-        document.getElementById(`toggle${board_id}`).addEventListener('click', function () {chevron_up(board_id)})
+        document.getElementById(`toggle${board_id}`).removeEventListener('click', board_close);
+        document.getElementById(`toggle${board_id}`).addEventListener('click', board_open)
     }
 }
 
-function chevron_up(board_id) {
+function board_open() {
+    let board_id = parseInt(this.dataset.boardId);
     let board_columns = document.getElementById(`board-columns${board_id}`);
     let elements = board_columns.childNodes;
     board_columns.animate([
@@ -66,8 +72,8 @@ function chevron_up(board_id) {
     }, 250);
     document.getElementById(`chevron-image${board_id}`).classList.remove('fa-chevron-up');
     document.getElementById(`chevron-image${board_id}`).classList.add('fa-chevron-down');
-    document.getElementById(`toggle${board_id}`).removeEventListener('click', chevron_up);
-    document.getElementById(`toggle${board_id}`).addEventListener('click', function () {chevron_down(board_id)})
+    document.getElementById(`toggle${board_id}`).removeEventListener('click', board_open);
+    document.getElementById(`toggle${board_id}`).addEventListener('click', board_close)
 
 }
 
@@ -79,7 +85,7 @@ function build_board(card) {
     board_header.setAttribute('class', 'board-header');
     let board_title = document.createElement('span');
     board_title.setAttribute('class', 'board-title');
-    board_title.id = `board${card.board_id}`
+    board_title.id = `board${card.board_id}`;
     board_title.isContentEditable;
     board_title.contentEditable = true;
     board_title.tabIndex = 1;
@@ -98,7 +104,8 @@ function build_board(card) {
     let board_toggle = document.createElement('button');
     board_toggle.setAttribute('class', 'board-toggle');
     board_toggle.id = `toggle${card.board_id}`;
-    board_toggle.addEventListener('click', function () {chevron_down(card.board_id)});
+    board_toggle.setAttribute('data-board-id', `${card.board_id}`);
+    board_toggle.addEventListener('click', board_close);
     let image = document.createElement('i');
     image.setAttribute('class', 'fas fa-chevron-down');
     image.id = `chevron-image${card.board_id}`;
