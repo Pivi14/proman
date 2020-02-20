@@ -11,14 +11,21 @@ def get_card_status(status_id):
     statuses = persistence.get_statuses()
     return next((status['title'] for status in statuses if status['id'] == str(status_id)), 'Unknown')
 
+
 def new_board(title):
+    print(title)
     sql_querries.create_board(title)
+    new_board_id = sql_querries.get_id_of_new_board()
+    print(new_board_id)
+    sql_querries.add_four_static_cols_to_new_board(new_board_id['max'])
+
 
 def new_card(card_data):
     col_id = sql_querries.col_by_board_id(card_data['board_id'])
     order_num = sql_querries.order_by_col_id(col_id)
     card_data['col_id'] = col_id
     card_data['order_num'] = order_num + 1
+
 
 def get_boards():
     """
