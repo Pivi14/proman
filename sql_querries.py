@@ -12,7 +12,6 @@ def get_boards(cursor):
                     FULL JOIN cards ON cards.board_id = boards.board_id AND cards.col_id = cols.col_id
                     ORDER BY boards.board_id, cols.col_id, cards.order_num
                     """
-
                    )
     return cursor.fetchall()
 
