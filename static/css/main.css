@@ -127,3 +127,9 @@ section.board{
 .card-title{
     padding-right: 16px;
 }
+
+#create-board{
+    position: absolute;
+    top: 20%;
+    left: 16.5%;
+}

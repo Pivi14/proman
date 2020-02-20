@@ -14,6 +14,11 @@ def get_card_status(status_id):
 def new_board(title):
     sql_querries.create_board(title)
 
+def new_card(card_data):
+    col_id = sql_querries.col_by_board_id(card_data['board_id'])
+    order_num = sql_querries.order_by_col_id(col_id)
+    card_data['col_id'] = col_id
+    card_data['order_num'] = order_num + 1
 
 def get_boards():
     """

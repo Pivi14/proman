@@ -24,3 +24,24 @@ def create_board(cursor, title):
                    {'title': title}
                    )
 
+@database_common.connection_handler
+def col_by_board_id(cursor, board_id):
+    cursor.execute("""
+                    SELECT col_id
+                    FROM cols
+                    WHERE board_id = %(board_id)s
+                    ORDER BY col_id DESC
+                    LIMIT 1
+    """, {'board_id': board_id})
+    return cursor.fetchone()
+
+@database_common.connection_handler
+def order_by_col_id(cursor, col_id):
+    cursor.execute("""
+                    SELECT order_num
+                    FROM cards
+                    WHERE col_id = %(col_id)s
+                    ORDER BY order_num DESC
+                    LIMIT 1
+    """, {'col_id': col_id})
+    return cursor.fetchone()

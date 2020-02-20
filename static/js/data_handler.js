@@ -63,8 +63,15 @@ export let dataHandler = {
             }
 
     ,
-    createNewCard: function (cardTitle, boardId, statusId, callback) {
+    createNewCard: function (card) {
         // creates new card, saves it and calls the callback function with its data
+        fetch('/new-card', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(card)
+        })
     }
     // here comes more features
 };

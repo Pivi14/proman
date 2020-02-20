@@ -3,11 +3,30 @@ import {dataHandler} from "./data_handler.js";
 
 function new_board() {
     let user_title=prompt('Add title name please!');
+    if (user_title === ''){
+        user_title = 'New Board'
+    }
     dataHandler.createNewBoard(user_title);
-    dom.loadBoards()
+    setTimeout(function () {
+        dom.loadBoards()
+    }, 100)
 
 }
 
+function create_card(board_id){
+    let card_title = prompt('Give me the card title!');
+    if (card_title === ''){
+        card_title = 'New card'
+    }
+    let card = {
+        'card_title': card_title,
+        'board_id': board_id
+    };
+    dataHandler.createNewCard(card);
+    setTimeout(function () {
+        dom.loadBoards()
+    }, 100)
+}
 
 function chevron_down(board_id) {
     let board_columns = document.getElementById(`board-columns${board_id}`);
@@ -64,6 +83,7 @@ function build_board(card) {
     let board_add = document.createElement('button');
     board_add.setAttribute('class', 'board-add');
     board_add.innerText = 'Add Card';
+    board_add.addEventListener('click', function (){create_card(card.board_id)});
     let board_toggle = document.createElement('button');
     board_toggle.setAttribute('class', 'board-toggle');
     board_toggle.id = `toggle${card.board_id}`;
