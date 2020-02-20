@@ -82,6 +82,7 @@ function build_board(card) {
     let board_title = document.createElement('span');
     board_title.setAttribute('class', 'board-title');
     board_title.id = `board${card.board_id}`;
+
     board_title.isContentEditable;
     board_title.contentEditable = true;
     board_title.tabIndex = 1;
@@ -93,6 +94,7 @@ function build_board(card) {
             board_title.innerText = card.title
         }
     });
+
     let board_add = document.createElement('button');
     board_add.setAttribute('class', 'board-add');
     board_add.innerText = 'Add Card';
@@ -123,7 +125,19 @@ function build_column(card) {
     board_column.id = `col${card.col_id}`;
     let board_column_title = document.createElement('div');
     board_column_title.setAttribute('class', 'board-column-title');
+
+    board_column_title.isContentEditable;
+    board_column_title.contentEditable = true;
+    board_column_title.tabIndex = 1;
     board_column_title.innerText = card.col_title;
+    board_column_title.addEventListener("focusout", function () {
+        if (isNullOrWhiteSpace(board_column_title.innerText) === false) {
+            dataHandler.changeColdName(parseInt(card.col_id), board_column_title.innerText);
+        } else {
+            board_column_title.innerText = card.col_title;
+        }
+    });
+
     let board_column_content = document.createElement('div');
     board_column_content.id = `board-column-content${card.col_id}`;
     board_column_content.setAttribute('class', 'board-column-content');
