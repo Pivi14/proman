@@ -57,9 +57,10 @@ export let dataHandler = {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(boardTitle)
-        }).then(function () {
-            callback();
-        });
+        })
+            .then(function () {
+                callback();
+            });
     },
     createNewCard: function (card) {
         // creates new card, saves it and calls the callback function with its data
