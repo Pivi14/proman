@@ -58,11 +58,12 @@ export let dataHandler = {
               },
               body: JSON.stringify(boardTitle)
             })
-            .then((resp)=>{return 'nothing'})
+            //.then((resp)=>{return resp.json()})
+            //.then((data) => callback(data));
             }
 
     ,
-    createNewCard: function (card) {
+    createNewCard: function (card, callback) {
         // creates new card, saves it and calls the callback function with its data
         fetch('/new-card', {
             method: 'POST',
@@ -71,8 +72,6 @@ export let dataHandler = {
             },
             body: JSON.stringify(card)
             })
-            .then((resp)=>{return 'nothing'})
-
-    }
+            }
     // here comes more features
 };

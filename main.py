@@ -27,14 +27,12 @@ def get_boards():
 def new_board():
     new_title = request.get_json()
     data_handler.new_board(new_title)
-    return 'nothing'
 
 
 @app.route("/new-card", methods=['POST'])
 def new_card():
     new_card_data = request.get_json()
     data_handler.new_card(new_card_data)
-    return 'nothing'
 
 
 @app.route("/get-cards/<int:board_id>")
