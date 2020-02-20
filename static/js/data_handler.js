@@ -13,8 +13,8 @@ export let dataHandler = {
             method: 'GET',
             credentials: 'same-origin'
         })
-        .then(response => response.json())  // parse the response as JSON
-        .then(json_response => callback(json_response));  // Call the `callback` with the returned object
+            .then(response => response.json())  // parse the response as JSON
+            .then(json_response => callback(json_response));  // Call the `callback` with the returned object
     },
     _api_post: function (url, data, callback) {
         // it is not called from outside
@@ -35,15 +35,15 @@ export let dataHandler = {
     getBoard: function (boardId, callback) {
         // the board is retrieved and then the callback function is called with the board
     },
-    changeBoardName: function(id,boardname){
-        let changed_name = {id : id,boardname : boardname};
+    changeBoardName: function (id, boardname) {
+        let changed_name = {id: id, boardname: boardname};
         fetch('/change-board-name', {
-              method: 'POST',
-              headers: {
+            method: 'POST',
+            headers: {
                 'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(changed_name)
-            })
+            },
+            body: JSON.stringify(changed_name)
+        })
     },
     getStatuses: function (callback) {
         // the statuses are retrieved and then the callback function is called with the statuses
@@ -62,13 +62,15 @@ export let dataHandler = {
     },
     createNewBoard: function (boardTitle, callback) {
         fetch('/new-board', {
-              method: 'POST',
-              headers: {
+            method: 'POST',
+            headers: {
                 'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(boardTitle)
-            })
-            }
+            },
+            body: JSON.stringify(boardTitle)
+        }).then(function () {
+            callback();
+        })
+    }
 
     ,
     createNewCard: function (cardTitle, boardId, statusId, callback) {
