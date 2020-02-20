@@ -8,6 +8,9 @@ function new_board() {
 
 }
 
+function isNullOrWhiteSpace(str) {
+  return (!str || str.length === 0 || /^\s*$/.test(str))
+}
 
 
 function build_board(card) {
@@ -23,13 +26,8 @@ function build_board(card) {
     board_title.contentEditable = true;
     board_title.tabIndex = 1;
     board_title.innerText = card.title;
-    /*board_title.addEventListener("focusin", function () {
-
-
-    })*/
-
     board_title.addEventListener("focusout",function () {
-        if ( board_title.innerText!==""){
+        if ( isNullOrWhiteSpace(board_title.innerText) === false) {
             dataHandler.changeBoardName(parseInt(board_title.id.slice(5)),board_title.innerText)}
         else{
             board_title.innerText = card.title
