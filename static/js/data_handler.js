@@ -13,8 +13,8 @@ export let dataHandler = {
             method: 'GET',
             credentials: 'same-origin'
         })
-        .then(response => response.json())  // parse the response as JSON
-        .then(json_response => callback(json_response));  // Call the `callback` with the returned object
+            .then(response => response.json())  // parse the response as JSON
+            .then(json_response => callback(json_response));  // Call the `callback` with the returned object
     },
     _api_post: function (url, data, callback) {
         // it is not called from outside
@@ -52,17 +52,13 @@ export let dataHandler = {
     },
     createNewBoard: function (boardTitle, callback) {
         fetch('/new-board', {
-              method: 'POST',
-              headers: {
+            method: 'POST',
+            headers: {
                 'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(boardTitle)
-            })
-            //.then((resp)=>{return resp.json()})
-            //.then((data) => callback(data));
-            }
-
-    ,
+            },
+            body: JSON.stringify(boardTitle)
+        })
+    },
     createNewCard: function (card) {
         // creates new card, saves it and calls the callback function with its data
         fetch('/new-card', {

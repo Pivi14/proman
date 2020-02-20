@@ -13,6 +13,9 @@ def get_card_status(status_id):
 
 def new_board(title):
     sql_querries.create_board(title)
+    sql_querries.get_id_of_new_board()
+    sql_querries.add_four_static_cols_to_new_board()
+
 
 def new_card(card_data):
     col_id = sql_querries.col_by_board_id(card_data['board_id'])

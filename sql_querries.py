@@ -24,6 +24,7 @@ def create_board(cursor, title):
                    {'title': title}
                    )
 
+
 @database_common.connection_handler
 def col_by_board_id(cursor, board_id):
     cursor.execute("""
@@ -35,6 +36,7 @@ def col_by_board_id(cursor, board_id):
     """, {'board_id': board_id})
     return cursor.fetchone()
 
+
 @database_common.connection_handler
 def order_by_col_id(cursor, col_id):
     cursor.execute("""
@@ -45,3 +47,19 @@ def order_by_col_id(cursor, col_id):
                     LIMIT 1
     """, {'col_id': col_id})
     return cursor.fetchone()
+
+
+@database_common.connection_handler
+def add_four_static_cols_to_new_board(cursor):
+    cursor.execute("""
+                    SELECT setval('cols_col_id_seq', (SELECT max(col_id) FROM cols));
+                    
+                    INSERT INTO cols (col_title, board_id) VALUES ('New', 3);
+                    INSERT INTO cols (col_title, board_id) VALUES ('In progress', 3);
+                    INSERT INTO cols (col_title, board_id) VALUES ('Testing', 3);
+                    INSERT INTO cols (col_title, board_id) VALUES ('Done', 3);
+                    """)
+
+
+def get_id_of_new_board():
+    pass
