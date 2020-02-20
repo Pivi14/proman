@@ -59,3 +59,24 @@ def order_by_col_id(cursor, col_id):
                     LIMIT 1
     """, {'col_id': col_id})
     return cursor.fetchone()
+
+
+@database_common.connection_handler
+def add_four_static_cols_to_new_board(cursor, new_board_id):
+    cursor.execute("""
+                    SELECT setval('cols_col_id_seq', (SELECT max(col_id) FROM cols));
+                    
+                    INSERT INTO cols (col_title, board_id) VALUES ('New', %(id)s);
+                    INSERT INTO cols (col_title, board_id) VALUES ('In progress', %(id)s);
+                    INSERT INTO cols (col_title, board_id) VALUES ('Testing', %(id)s);
+                    INSERT INTO cols (col_title, board_id) VALUES ('Done', %(id)s);
+                    """, {'id': new_board_id})
+
+
+@database_common.connection_handler
+def get_id_of_new_board(cursor):
+    cursor.execute("""
+                    SELECT max(board_id) from boards;
+                    """)
+    max_id = cursor.fetchone()
+    return max_id
