@@ -26,6 +26,9 @@ def new_card(card_data):
     card_data['col_id'] = col_id
     card_data['order_num'] = order_num + 1
 
+def change_title(changedName):
+    sql_querries.change_board_name(changedName)
+
 
 def get_boards():
     """
