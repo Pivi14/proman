@@ -9,7 +9,7 @@ function new_board() {
     dataHandler.createNewBoard(user_title);
     setTimeout(function () {
         dom.loadBoards()
-    }, 100)
+    }, 1000)
 
 }
 
