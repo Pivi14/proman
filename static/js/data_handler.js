@@ -58,8 +58,7 @@ export let dataHandler = {
               },
               body: JSON.stringify(boardTitle)
             })
-            //.then((resp)=>{return resp.json()})
-            //.then((data) => callback(data));
+            .then((resp)=>{return 'nothing'})
             }
 
     ,
@@ -71,7 +70,9 @@ export let dataHandler = {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(card)
-        })
+            })
+            .then((resp)=>{return 'nothing'})
+
     }
     // here comes more features
 };
