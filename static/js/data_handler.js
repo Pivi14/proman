@@ -35,6 +35,15 @@ export let dataHandler = {
     getBoard: function (boardId, callback) {
         // the board is retrieved and then the callback function is called with the board
     },
+    changeBoardName: function(boardname){
+        fetch('/change-board-name', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(boardname)
+            })
+    },
     getStatuses: function (callback) {
         // the statuses are retrieved and then the callback function is called with the statuses
     },
@@ -58,8 +67,6 @@ export let dataHandler = {
               },
               body: JSON.stringify(boardTitle)
             })
-            //.then((resp)=>{return resp.json()})
-            //.then((data) => callback(data));
             }
 
     ,
