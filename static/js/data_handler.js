@@ -67,9 +67,10 @@ export let dataHandler = {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(boardTitle)
-        }).then(function () {
-            callback();
         })
+            .then(function () {
+            callback();
+        });
     },
     createNewCard: function (card, callback) {
         // creates new card, saves it and calls the callback function with its data
@@ -79,7 +80,7 @@ export let dataHandler = {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(card)
-            })
-            }
+        })
+    }
     // here comes more features
 };

@@ -6,11 +6,7 @@ function new_board() {
     if (user_title === '') {
         user_title = 'New Board'
     }
-    dataHandler.createNewBoard(user_title);
-    setTimeout(function () {
-        dom.loadBoards()
-    }, 200)
-
+    dataHandler.createNewBoard(user_title, dom.loadBoards);
 }
 
 function create_card(board_id) {
