@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for,request
+from flask import Flask, render_template, url_for, request, jsonify
 from util import json_response
 
 import data_handler
@@ -27,7 +27,6 @@ def get_boards():
 @json_response
 def new_board():
     new_title = request.get_json()
-
     data_handler.new_board(new_title)
 
 @app.route("/change-board-name", methods=['POST'])
@@ -40,6 +39,8 @@ def change_board_name():
 @json_response
 def new_card():
     new_card_data = request.get_json()
+    data_handler.new_card(new_card_data)
+
 
 @app.route("/get-cards/<int:board_id>")
 @json_response

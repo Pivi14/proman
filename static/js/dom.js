@@ -7,9 +7,6 @@ function new_board() {
         user_title = 'New Board'
     }
     dataHandler.createNewBoard(user_title, dom.loadBoards);
-    // setTimeout(function () {
-    //     dom.loadBoards()
-    // }, 1000)
 }
 
 function create_card(board_id) {
@@ -24,7 +21,7 @@ function create_card(board_id) {
     dataHandler.createNewCard(card);
     setTimeout(function () {
         dom.loadBoards()
-    }, 100)
+    }, 200)
 }
 
 function isNullOrWhiteSpace(str) {
@@ -49,9 +46,7 @@ function chevron_down(board_id) {
         document.getElementById(`chevron-image${board_id}`).classList.remove('fa-chevron-down');
         document.getElementById(`chevron-image${board_id}`).classList.add('fa-chevron-up');
         document.getElementById(`toggle${board_id}`).removeEventListener('click', chevron_down);
-        document.getElementById(`toggle${board_id}`).addEventListener('click', function () {
-            chevron_up(board_id)
-        })
+        document.getElementById(`toggle${board_id}`).addEventListener('click', function () {chevron_up(board_id)})
     }
 }
 
@@ -72,9 +67,7 @@ function chevron_up(board_id) {
     document.getElementById(`chevron-image${board_id}`).classList.remove('fa-chevron-up');
     document.getElementById(`chevron-image${board_id}`).classList.add('fa-chevron-down');
     document.getElementById(`toggle${board_id}`).removeEventListener('click', chevron_up);
-    document.getElementById(`toggle${board_id}`).addEventListener('click', function () {
-        chevron_down(board_id)
-    })
+    document.getElementById(`toggle${board_id}`).addEventListener('click', function () {chevron_down(board_id)})
 
 }
 
@@ -101,15 +94,11 @@ function build_board(card) {
     let board_add = document.createElement('button');
     board_add.setAttribute('class', 'board-add');
     board_add.innerText = 'Add Card';
-    board_add.addEventListener('click', function () {
-        create_card(card.board_id)
-    });
+    board_add.addEventListener('click', function (){create_card(card.board_id)});
     let board_toggle = document.createElement('button');
     board_toggle.setAttribute('class', 'board-toggle');
     board_toggle.id = `toggle${card.board_id}`;
-    board_toggle.addEventListener('click', function () {
-        chevron_down(card.board_id)
-    });
+    board_toggle.addEventListener('click', function () {chevron_down(card.board_id)});
     let image = document.createElement('i');
     image.setAttribute('class', 'fas fa-chevron-down');
     image.id = `chevron-image${card.board_id}`;

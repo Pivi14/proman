@@ -20,11 +20,14 @@ def new_board(title):
     sql_querries.add_four_static_cols_to_new_board(new_board_id['max'])
 
 
+
 def new_card(card_data):
     col_id = sql_querries.col_by_board_id(card_data['board_id'])
-    order_num = sql_querries.order_by_col_id(col_id)
-    card_data['col_id'] = col_id
-    card_data['order_num'] = order_num + 1
+    order_num = sql_querries.order_by_col_id(col_id['col_id'])
+    card_data['col_id'] = col_id['col_id']
+    card_data['order_num'] = order_num['order_num'] + 1
+    sql_querries.create_card(card_data)
+
 
 def change_title(changedName):
     sql_querries.change_board_name(changedName)

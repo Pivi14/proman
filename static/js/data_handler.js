@@ -70,9 +70,7 @@ export let dataHandler = {
         }).then(function () {
             callback();
         })
-    }
-
-    ,
+    },
     createNewCard: function (cardTitle, boardId, statusId, callback) {
         // creates new card, saves it and calls the callback function with its data
         fetch('/new-card', {
@@ -81,7 +79,7 @@ export let dataHandler = {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(card)
-        })
-    }
+            })
+            }
     // here comes more features
 };
