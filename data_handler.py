@@ -29,6 +29,9 @@ def new_card(card_data):
     sql_querries.create_card(card_data)
 
 
+def change_title(changedName):
+    sql_querries.change_board_name(changedName)
+
 
 def get_boards():
     """

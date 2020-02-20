@@ -27,6 +27,9 @@ function create_card(board_id){
         dom.loadBoards()
     }, 200)
 }
+function isNullOrWhiteSpace(str) {
+  return (!str || str.length === 0 || /^\s*$/.test(str))
+}
 
 function chevron_down(board_id) {
     let board_columns = document.getElementById(`board-columns${board_id}`);
@@ -79,7 +82,18 @@ function build_board(card) {
     board_header.setAttribute('class', 'board-header');
     let board_title = document.createElement('span');
     board_title.setAttribute('class', 'board-title');
+    board_title.id = `board${card.board_id}`
+    board_title.isContentEditable;
+    board_title.contentEditable = true;
+    board_title.tabIndex = 1;
     board_title.innerText = card.title;
+    board_title.addEventListener("focusout",function () {
+        if ( isNullOrWhiteSpace(board_title.innerText) === false) {
+            dataHandler.changeBoardName(parseInt(board_title.id.slice(5)),board_title.innerText)}
+        else{
+            board_title.innerText = card.title
+        }
+    });
     let board_add = document.createElement('button');
     board_add.setAttribute('class', 'board-add');
     board_add.innerText = 'Add Card';

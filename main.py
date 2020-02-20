@@ -29,6 +29,11 @@ def new_board():
     new_title = request.get_json()
     data_handler.new_board(new_title)
 
+@app.route("/change-board-name", methods=['POST'])
+@json_response
+def change_board_name():
+    changed_title = request.get_json()
+    data_handler.change_title(changed_title)
 
 @app.route("/new-card", methods=['POST'])
 @json_response
