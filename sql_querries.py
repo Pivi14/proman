@@ -7,19 +7,18 @@ def get_boards(cursor):
     cursor.execute("""
                     SELECT boards.board_id, boards.title, cols.col_id, cols.col_title, cards.id,
                      cards.card_title, cards.order_num
-                    FROM boards 
+                    FROM boards
                     FULL JOIN cols ON  cols.board_id = boards.board_id
                     FULL JOIN cards ON cards.board_id = boards.board_id AND cards.col_id = cols.col_id
                     ORDER BY boards.board_id, cols.col_id, cards.order_num
                     """
-
                    )
     return cursor.fetchall()
 
 
 @database_common.connection_handler
 def create_board(cursor, title):
-    cursor.execute("""
+    cursor.execute("""                  
                    INSERT INTO boards(title) VALUES (%(title)s) """,
                    {'title': title}
                    )
@@ -41,7 +40,7 @@ def create_card(cursor, card_data):
 
 @database_common.connection_handler
 def col_by_board_id(cursor, board_id):
-    cursor.execute("""
+    cursor.execute("""   
                     SELECT col_id
                     FROM cols
                     WHERE board_id = %(board_id)s
@@ -65,9 +64,7 @@ def order_by_col_id(cursor, col_id):
 
 @database_common.connection_handler
 def add_four_static_cols_to_new_board(cursor, new_board_id):
-    cursor.execute("""
-                    SELECT setval('cols_col_id_seq', (SELECT max(col_id) FROM cols));
-                    
+    cursor.execute("""                    
                     INSERT INTO cols (col_title, board_id) VALUES ('New', %(id)s);
                     INSERT INTO cols (col_title, board_id) VALUES ('In progress', %(id)s);
                     INSERT INTO cols (col_title, board_id) VALUES ('Testing', %(id)s);
