@@ -128,3 +128,7 @@ section.board {
 .card-title {
     padding-right: 16px;
 }
+
+#create-board{
+    margin-left: 20px;
+}
