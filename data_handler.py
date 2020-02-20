@@ -14,6 +14,9 @@ def get_card_status(status_id):
 def new_board(title):
     sql_querries.create_board(title)
 
+def change_title(changedName):
+    sql_querries.change_board_name(changedName)
+
 
 def get_boards():
     """

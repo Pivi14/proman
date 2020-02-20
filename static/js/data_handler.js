@@ -35,13 +35,14 @@ export let dataHandler = {
     getBoard: function (boardId, callback) {
         // the board is retrieved and then the callback function is called with the board
     },
-    changeBoardName: function(boardname){
+    changeBoardName: function(id,boardname){
+        let changed_name = {id : id,boardname : boardname};
         fetch('/change-board-name', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
               },
-              body: JSON.stringify(boardname)
+              body: JSON.stringify(changed_name)
             })
     },
     getStatuses: function (callback) {

@@ -18,13 +18,22 @@ function build_board(card) {
     board_header.setAttribute('class', 'board-header');
     let board_title = document.createElement('span');
     board_title.setAttribute('class', 'board-title');
+    board_title.id = `board${card.board_id}`
     board_title.isContentEditable;
     board_title.contentEditable = true;
     board_title.tabIndex = 1;
     board_title.innerText = card.title;
-    board_title.addEventListener("focusout",function () {
-        dataHandler.changeBoardName(board_title.innerText)
+    /*board_title.addEventListener("focusin", function () {
 
+
+    })*/
+
+    board_title.addEventListener("focusout",function () {
+        if ( board_title.innerText!==""){
+            dataHandler.changeBoardName(parseInt(board_title.id.slice(5)),board_title.innerText)}
+        else{
+            board_title.innerText = card.title
+        }
     });
     let board_add = document.createElement('button');
     board_add.setAttribute('class', 'board-add');
