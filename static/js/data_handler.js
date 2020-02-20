@@ -57,6 +57,8 @@ export let dataHandler = {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(boardTitle)
+        }).then(function () {
+            callback();
         });
     },
     createNewCard: function (card) {

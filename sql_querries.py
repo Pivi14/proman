@@ -20,6 +20,8 @@ def get_boards(cursor):
 @database_common.connection_handler
 def create_board(cursor, title):
     cursor.execute("""
+                   SELECT setval('boards_board_id_seq', (SELECT max(board_id) FROM boards));
+                   
                    INSERT INTO boards(title) VALUES (%(title)s) """,
                    {'title': title}
                    )
@@ -27,7 +29,7 @@ def create_board(cursor, title):
 
 @database_common.connection_handler
 def col_by_board_id(cursor, board_id):
-    cursor.execute("""
+    cursor.execute("""   
                     SELECT col_id
                     FROM cols
                     WHERE board_id = %(board_id)s
