@@ -27,8 +27,10 @@ def create_board(cursor, title):
 
 @database_common.connection_handler
 def create_card(cursor, card_data):
+    print('card_data: ', card_data)
     cursor.execute("""
-                    INSERT INTO cards(board_id, card_title, col_id, order_num) VALUES (%(board_id)s, %(card_title)s, %(col_id)s, %(order_num)s)
+                    INSERT INTO cards(board_id, card_title, col_id, order_num) 
+                    VALUES (%(board_id)s, %(card_title)s, %(col_id)s, %(order_num)s)
     """, {
         'board_id': card_data['board_id'],
         'card_title': card_data['card_title'],

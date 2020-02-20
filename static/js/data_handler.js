@@ -71,7 +71,7 @@ export let dataHandler = {
             }
 
     ,
-    createNewCard: function (cardTitle, boardId, statusId, callback) {
+    createNewCard: function (card, callback) {
         // creates new card, saves it and calls the callback function with its data
         fetch('/new-card', {
             method: 'POST',
