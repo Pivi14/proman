@@ -32,9 +32,11 @@ def new_card(card_data):
     sql_querries.create_card(card_data)
 
 
-def change_title(changedName):
+def change_board_title(changedName):
     sql_querries.change_board_name(changedName)
 
+def change_col_title(id_title):
+    sql_querries.change_col_name(id_title)
 
 def get_boards():
     """
@@ -53,3 +55,5 @@ def get_cards_for_board(board_id):
             card['status_id'] = get_card_status(card['status_id'])  # Set textual status for the card
             matching_cards.append(card)
     return matching_cards
+
+

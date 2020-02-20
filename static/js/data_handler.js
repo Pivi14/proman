@@ -45,9 +45,20 @@ export let dataHandler = {
             body: JSON.stringify(changed_name)
         })
     },
+    changeColdName(col_id, col_title) {
+        let id_title = {col_id: col_id, col_title: col_title};
+        fetch('change-col-name', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(id_title)
+        })
+    },
     getStatuses: function (callback) {
         // the statuses are retrieved and then the callback function is called with the statuses
-    },
+    }
+    ,
     getStatus: function (statusId, callback) {
         // the status is retrieved and then the callback function is called with the status
     },
@@ -69,8 +80,8 @@ export let dataHandler = {
             body: JSON.stringify(boardTitle)
         })
             .then(function () {
-            callback();
-        });
+                callback();
+            });
     },
     createNewCard: function (card, callback) {
         // creates new card, saves it and calls the callback function with its data
@@ -82,5 +93,6 @@ export let dataHandler = {
             body: JSON.stringify(card)
         })
     }
-    // here comes more features
 };
+// here comes more features
+

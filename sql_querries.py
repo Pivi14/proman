@@ -80,6 +80,7 @@ def get_id_of_new_board(cursor):
     max_id = cursor.fetchone()
     return max_id
 
+
 @database_common.connection_handler
 def change_board_name(cursor, changed_name):
     cursor.execute("""
@@ -88,3 +89,12 @@ def change_board_name(cursor, changed_name):
                     WHERE board_id = %(id)s""",
                    {'changed_name': changed_name['boardname'],
                     'id': changed_name['id']})
+
+@database_common.connection_handler
+def change_col_name(cursor, id_title):
+    cursor.execute("""
+                    UPDATE cols
+                    SET col_title = %(changed_name)s
+                    WHERE col_id = %(id)s""",
+                   {'changed_name': id_title['col_title'],
+                    'id': id_title['col_id']})
