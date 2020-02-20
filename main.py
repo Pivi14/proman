@@ -24,12 +24,14 @@ def get_boards():
 
 
 @app.route("/new-board", methods=['POST'])
+@json_response
 def new_board():
     new_title = request.get_json()
     data_handler.new_board(new_title)
 
 
 @app.route("/new-card", methods=['POST'])
+@json_response
 def new_card():
     new_card_data = request.get_json()
     data_handler.new_card(new_card_data)

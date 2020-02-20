@@ -9,7 +9,7 @@ function new_board() {
     dataHandler.createNewBoard(user_title);
     setTimeout(function () {
         dom.loadBoards()
-    }, 100)
+    }, 200)
 
 }
 
@@ -25,7 +25,7 @@ function create_card(board_id){
     dataHandler.createNewCard(card);
     setTimeout(function () {
         dom.loadBoards()
-    }, 100)
+    }, 200)
 }
 
 function chevron_down(board_id) {

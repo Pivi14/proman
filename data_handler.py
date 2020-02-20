@@ -21,7 +21,6 @@ def new_card(card_data):
     order_num = sql_querries.order_by_col_id(col_id['col_id'])
     card_data['col_id'] = col_id['col_id']
     card_data['order_num'] = order_num['order_num'] + 1
-    print('card_datas:', card_data)
     sql_querries.create_card(card_data)
 
 
