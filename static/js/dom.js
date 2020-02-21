@@ -45,7 +45,7 @@ function board_close() {
             for (let element of elements) {
                 element.style.display = 'none'
             }
-        }, 250);
+        }, 100);
         document.getElementById(`chevron-image${board_id}`).classList.remove('fa-chevron-down');
         document.getElementById(`chevron-image${board_id}`).classList.add('fa-chevron-up');
         document.getElementById(`toggle${board_id}`).removeEventListener('click', board_close);
@@ -68,7 +68,7 @@ function board_open() {
         for (let element of elements) {
             element.style.display = 'block'
         }
-    }, 250);
+    }, 400);
     document.getElementById(`chevron-image${board_id}`).classList.remove('fa-chevron-up');
     document.getElementById(`chevron-image${board_id}`).classList.add('fa-chevron-down');
     document.getElementById(`toggle${board_id}`).removeEventListener('click', board_open);
