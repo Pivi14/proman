@@ -38,6 +38,9 @@ def change_board_title(changedName):
 def change_col_title(id_title):
     sql_querries.change_col_name(id_title)
 
+def change_card_title(id_title):
+    sql_querries.change_card_name(id_title)
+
 def get_boards():
     """
     Gather all boards

@@ -26,7 +26,6 @@ def create_board(cursor, title):
 
 @database_common.connection_handler
 def create_card(cursor, card_data):
-    print('card_data: ', card_data)
     cursor.execute("""
                     INSERT INTO cards(board_id, card_title, col_id, order_num) 
                     VALUES (%(board_id)s, %(card_title)s, %(col_id)s, %(order_num)s)
@@ -90,6 +89,7 @@ def change_board_name(cursor, changed_name):
                    {'changed_name': changed_name['boardname'],
                     'id': changed_name['id']})
 
+
 @database_common.connection_handler
 def change_col_name(cursor, id_title):
     cursor.execute("""
@@ -98,3 +98,13 @@ def change_col_name(cursor, id_title):
                     WHERE col_id = %(id)s""",
                    {'changed_name': id_title['col_title'],
                     'id': id_title['col_id']})
+
+
+@database_common.connection_handler
+def change_card_name(cursor, id_title):
+    cursor.execute("""
+                    UPDATE cards
+                    SET card_title = %(changed_name)s
+                    WHERE id = %(id)s""",
+                   {'changed_name': id_title['card_title'],
+                    'id': id_title['id']})

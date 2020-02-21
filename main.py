@@ -44,6 +44,13 @@ def change_col_name():
     data_handler.change_col_title(id_title)
 
 
+@app.route("/change-card-name", methods=['POST'])
+@json_response
+def change_card_name():
+    id_title = request.get_json()
+    data_handler.change_card_title(id_title)
+
+
 @app.route("/new-card", methods=['POST'])
 @json_response
 def new_card():

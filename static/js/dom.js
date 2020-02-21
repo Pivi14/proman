@@ -163,7 +163,18 @@ function build_card(card) {
     image.setAttribute('class', 'fas fa-trash-alt');
     let card_title = document.createElement('div');
     card_title.setAttribute('class', 'card-title');
+    card_title.id = `card${card.board_id}`;
+    card_title.isContentEditable;
     card_title.innerText = card.card_title;
+    card_title.contentEditable = true;
+    card_title.tabIndex = 1;
+    card_title.addEventListener("focusout", function () {
+        if (isNullOrWhiteSpace(card_title.innerText) === false) {
+            dataHandler.changeCardName(parseInt(card_title.id.slice(4)), card_title.innerText);
+        } else {
+            card_title.innerText = card.card_title;
+        }
+    });
 
     card_remove.appendChild(image);
     individual_card.appendChild(card_remove);

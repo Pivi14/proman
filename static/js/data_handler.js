@@ -55,6 +55,16 @@ export let dataHandler = {
             body: JSON.stringify(id_title)
         })
     },
+    changeCardName(card_id, card_title){
+        let id_title = {id: card_id, card_title:card_title};
+        fetch('/change-card-name', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(id_title)
+        })
+    },
     getStatuses: function (callback) {
         // the statuses are retrieved and then the callback function is called with the statuses
     }
