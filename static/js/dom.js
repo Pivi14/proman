@@ -104,6 +104,10 @@ function build_board(card) {
     board_add.addEventListener('click', function () {
         create_card(card.board_id)
     });
+    let deleteButton = document.createElement('button');
+    deleteButton.setAttribute('class', 'board-toggle');
+    let deleteImage = document.createElement('i');
+    deleteImage.setAttribute('class', 'fas fa-trash-alt');
     let board_toggle = document.createElement('button');
     board_toggle.setAttribute('class', 'board-toggle');
     board_toggle.id = `toggle${card.board_id}`;
@@ -118,7 +122,9 @@ function build_board(card) {
     board_toggle.appendChild(image);
     board_header.appendChild(board_title);
     board_header.appendChild(board_add);
+    deleteButton.appendChild(deleteImage);
     board_header.appendChild(board_toggle);
+    board_header.appendChild(deleteButton);
     create_board.appendChild(board_header);
     create_board.appendChild(board_columns);
     document.getElementById('board-container').appendChild(create_board);
