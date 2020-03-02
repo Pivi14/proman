@@ -18,10 +18,19 @@ function create_card(board_id) {
         'card_title': card_title,
         'board_id': board_id
     };
-    dataHandler.createNewCard(card);
-    setTimeout(function () {
-        dom.loadBoards()
-    }, 200)
+    dataHandler.createNewCard(card, dom.loadBoards);
+}
+
+function create_col(board_id) {
+    let col_title = prompt('Give me the status title');
+    if (col_title === '') {
+        col_title = 'New status'
+    }
+    const col = {
+        'col_title': col_title,
+        'board_id': board_id
+    };
+    dataHandler.createNewCol(col, dom.loadBoards)
 }
 
 function isNullOrWhiteSpace(str) {
@@ -117,6 +126,9 @@ function build_board(card) {
     let boardAddCol = document.createElement('button');
     boardAddCol.setAttribute('class', 'board-add');
     boardAddCol.innerText = 'Add Status';
+    boardAddCol.addEventListener('click', function () {
+        create_col(card.board_id)
+    });
 
     let deleteButton = document.createElement('button');
     deleteButton.setAttribute('class', 'board-toggle');

@@ -59,6 +59,12 @@ def new_card():
     return '', 204
 
 
+@app.route("/new-col", methods=['POST'])
+def new_col():
+    new_col_data = request.get_json()
+    data_handler.new_col(new_col_data)
+    return '', 204
+
 @app.route("/delete-element", methods=['POST'])
 def delete_card():
     deleted_elem = request.get_json()

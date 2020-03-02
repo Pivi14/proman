@@ -110,9 +110,24 @@ export let dataHandler = {
             },
             body: JSON.stringify(card)
         })
+            .then(function () {
+                callback();
+            })
     },
     deleteElement: function (card) {
         dataHandler._api_post('/delete-element', card)
+    },
+    createNewCol: function (col, callback) {
+        fetch('/new-col', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(col)
+        })
+            .then(function () {
+                callback()
+            })
     }
 };
 // here comes more features

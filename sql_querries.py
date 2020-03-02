@@ -38,6 +38,17 @@ def create_card(cursor, card_data):
 
 
 @database_common.connection_handler
+def create_col(cursor, data):
+    cursor.execute("""
+                    INSERT INTO cols(col_title, board_id) 
+                    VALUES (%(col_title)s, %(board_id)s)
+    """, {
+        'col_title': data['col_title'],
+        'board_id': data['board_id']
+    })
+
+
+@database_common.connection_handler
 def col_by_board_id(cursor, board_id):
     cursor.execute("""   
                     SELECT col_id

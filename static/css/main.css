@@ -75,8 +75,8 @@ section.board {
 }
 
 .board-columns {
-    display: flex;
-    flex-wrap: nowrap;
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
 }
 
 .board-column {

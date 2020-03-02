@@ -32,8 +32,12 @@ def new_card(card_data):
     sql_querries.create_card(card_data)
 
 
-def change_board_title(changedName):
-    sql_querries.change_board_name(changedName)
+def new_col(col_data):
+    sql_querries.create_col(col_data)
+
+
+def change_board_title(changed_name):
+    sql_querries.change_board_name(changed_name)
 
 
 def change_col_title(id_title):
