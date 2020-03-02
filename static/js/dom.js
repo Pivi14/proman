@@ -148,11 +148,16 @@ function build_column(card) {
             board_column_title.innerText = card.col_title;
         }
     });
-
+    let deleteColumn = document.createElement('div');
+    deleteColumn.setAttribute('class', 'delete-column');
+    let deleteImage = document.createElement('i');
+    deleteImage.setAttribute('class', 'fas fa-trash-alt');
     let board_column_content = document.createElement('div');
     board_column_content.id = `board-column-content${card.col_id}`;
     board_column_content.setAttribute('class', 'board-column-content');
 
+    deleteColumn.appendChild(deleteImage);
+    board_column.appendChild(deleteColumn);
     board_column.appendChild(board_column_title);
     board_column.appendChild(board_column_content);
 
