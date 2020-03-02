@@ -76,6 +76,16 @@ function board_open() {
 
 }
 
+function deleteElement() {
+    let element = {
+        id: this.getAttribute('data-id'),
+        table: this.getAttribute('data-table')
+    };
+    let id_str = this.getAttribute('data-idStr');
+    document.getElementById(`${id_str}${element.id}`).remove();
+    dataHandler.deleteElement(element)
+}
+
 function build_board(card) {
     let create_board = document.createElement('section');
     create_board.setAttribute('class', 'board');
@@ -98,14 +108,22 @@ function build_board(card) {
         }
     });
 
-    let board_add = document.createElement('button');
-    board_add.setAttribute('class', 'board-add');
-    board_add.innerText = 'Add Card';
-    board_add.addEventListener('click', function () {
+    let boardAddCard = document.createElement('button');
+    boardAddCard.setAttribute('class', 'board-add');
+    boardAddCard.innerText = 'Add Card';
+    boardAddCard.addEventListener('click', function () {
         create_card(card.board_id)
     });
+    let boardAddCol = document.createElement('button');
+    boardAddCol.setAttribute('class', 'board-add');
+    boardAddCol.innerText = 'Add Status';
+
     let deleteButton = document.createElement('button');
     deleteButton.setAttribute('class', 'board-toggle');
+    deleteButton.setAttribute('data-id', `${card.board_id}`);
+    deleteButton.setAttribute('data-table', 'boards');
+    deleteButton.setAttribute('data-idStr', 'board');
+    deleteButton.addEventListener('click', deleteElement);
     let deleteImage = document.createElement('i');
     deleteImage.setAttribute('class', 'fas fa-trash-alt');
     let board_toggle = document.createElement('button');
@@ -121,7 +139,8 @@ function build_board(card) {
     board_columns.setAttribute('class', 'board-columns');
     board_toggle.appendChild(image);
     board_header.appendChild(board_title);
-    board_header.appendChild(board_add);
+    board_header.appendChild(boardAddCol);
+    board_header.appendChild(boardAddCard);
     deleteButton.appendChild(deleteImage);
     board_header.appendChild(board_toggle);
     board_header.appendChild(deleteButton);
@@ -150,6 +169,10 @@ function build_column(card) {
     });
     let deleteColumn = document.createElement('div');
     deleteColumn.setAttribute('class', 'delete-column');
+    deleteColumn.setAttribute('data-id', `${card.col_id}`);
+    deleteColumn.setAttribute('data-table', 'cols');
+    deleteColumn.setAttribute('data-idStr', 'col');
+    deleteColumn.addEventListener('click', deleteElement);
     let deleteImage = document.createElement('i');
     deleteImage.setAttribute('class', 'fas fa-trash-alt');
     let board_column_content = document.createElement('div');
@@ -164,11 +187,6 @@ function build_column(card) {
     document.getElementById(`board-columns${card.board_id}`).appendChild(board_column);
 }
 
-function deleteCard() {
-    let card = {id: this.getAttribute('data-id')};
-    document.getElementById(`card${card.id}`).remove();
-    dataHandler.deleteCard(card)
-}
 
 function build_card(card) {
     let individual_card = document.createElement('div');
@@ -179,7 +197,9 @@ function build_card(card) {
     let image = document.createElement('i');
     image.setAttribute('class', 'fas fa-trash-alt');
     image.setAttribute('data-id', `${card.id}`);
-    image.addEventListener('click', deleteCard);
+    image.setAttribute('data-table', 'cards');
+    image.setAttribute('data-idStr', 'card');
+    image.addEventListener('click', deleteElement);
     let card_title = document.createElement('div');
     card_title.setAttribute('class', 'card-title');
     card_title.id = `card${card.board_id}`;

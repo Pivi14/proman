@@ -111,8 +111,8 @@ export let dataHandler = {
             body: JSON.stringify(card)
         })
     },
-    deleteCard: function (card) {
-        dataHandler._api_post('/delete-card', card)
+    deleteElement: function (card) {
+        dataHandler._api_post('/delete-element', card)
     }
 };
 // here comes more features

@@ -59,10 +59,10 @@ def new_card():
     return '', 204
 
 
-@app.route("/delete-card", methods=['POST'])
+@app.route("/delete-element", methods=['POST'])
 def delete_card():
-    deleted_card = request.get_json()
-    data_handler.delete_card(deleted_card)
+    deleted_elem = request.get_json()
+    data_handler.delete_element(deleted_elem)
     return '', 204
 
 @app.route("/get-cards/<int:board_id>")

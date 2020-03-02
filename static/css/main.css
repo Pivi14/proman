@@ -60,6 +60,11 @@ section.board {
     display: inline-block;
 }
 
+.board-add {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
 .board-toggle {
     float: right;
     margin: 13px;

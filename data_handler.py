@@ -44,8 +44,13 @@ def change_card_title(id_title):
     sql_querries.change_card_name(id_title)
 
 
-def delete_card(card):
-    sql_querries.delete_card(card)
+def delete_element(element):
+    if element['table'] == 'cards':
+        sql_querries.delete_card(element)
+    elif element['table'] == 'cols':
+        sql_querries.delete_column(element)
+    elif element['table'] == 'boards':
+        sql_querries.delete_table(element)
 
 
 def get_boards():

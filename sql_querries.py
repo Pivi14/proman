@@ -115,3 +115,20 @@ def delete_card(cursor, card):
     cursor.execute("""
                     DELETE FROM cards WHERE id = %(id)s""",
                    {'id': card['id']})
+
+
+@database_common.connection_handler
+def delete_column(cursor, data):
+    cursor.execute("""
+                    DELETE FROM cards WHERE col_id = %(id)s;
+                    DELETE FROM cols WHERE col_id = %(id)s;
+    """, {'id': data['id']})
+
+
+@database_common.connection_handler
+def delete_table(cursor, data):
+    cursor.execute("""
+                    DELETE FROM cards WHERE board_id = %(id)s;
+                    DELETE FROM cols WHERE board_id = %(id)s;
+                    DELETE FROM boards WHERE board_id = %(id)s""",
+                   {'id': data['id']})
