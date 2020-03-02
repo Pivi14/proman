@@ -28,35 +28,42 @@ def get_boards():
 def new_board():
     new_title = request.get_json()
     data_handler.new_board(new_title)
+    return '', 204
 
 
 @app.route("/change-board-name", methods=['POST'])
-@json_response
 def change_board_name():
     changed_title = request.get_json()
     data_handler.change_board_title(changed_title)
+    return '', 204
 
 
 @app.route("/change-col-name", methods=['POST'])
-@json_response
 def change_col_name():
     id_title = request.get_json()
     data_handler.change_col_title(id_title)
+    return '', 204
 
 
 @app.route("/change-card-name", methods=['POST'])
-@json_response
 def change_card_name():
     id_title = request.get_json()
     data_handler.change_card_title(id_title)
+    return '', 204
 
 
 @app.route("/new-card", methods=['POST'])
-@json_response
 def new_card():
     new_card_data = request.get_json()
     data_handler.new_card(new_card_data)
+    return '', 204
 
+
+@app.route("/delete-card", methods=['POST'])
+def delete_card():
+    deleted_card = request.get_json()
+    data_handler.delete_card(deleted_card)
+    return '', 204
 
 @app.route("/get-cards/<int:board_id>")
 @json_response

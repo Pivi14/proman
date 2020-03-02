@@ -108,3 +108,10 @@ def change_card_name(cursor, id_title):
                     WHERE id = %(id)s""",
                    {'changed_name': id_title['card_title'],
                     'id': id_title['id']})
+
+
+@database_common.connection_handler
+def delete_card(cursor, card):
+    cursor.execute("""
+                    DELETE FROM cards WHERE id = %(id)s""",
+                   {'id': card['id']})

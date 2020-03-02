@@ -153,6 +153,12 @@ function build_column(card) {
     document.getElementById(`board-columns${card.board_id}`).appendChild(board_column);
 }
 
+function deleteCard() {
+    let card = {id: this.getAttribute('data-id')};
+    document.getElementById(`card${card.id}`).remove();
+    dataHandler.deleteCard(card)
+}
+
 function build_card(card) {
     let individual_card = document.createElement('div');
     individual_card.setAttribute('class', 'card');
@@ -161,6 +167,8 @@ function build_card(card) {
     card_remove.setAttribute('class', 'card-remove');
     let image = document.createElement('i');
     image.setAttribute('class', 'fas fa-trash-alt');
+    image.setAttribute('data-id', `${card.id}`);
+    image.addEventListener('click', deleteCard);
     let card_title = document.createElement('div');
     card_title.setAttribute('class', 'card-title');
     card_title.id = `card${card.board_id}`;

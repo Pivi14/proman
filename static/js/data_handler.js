@@ -19,6 +19,14 @@ export let dataHandler = {
     _api_post: function (url, data, callback) {
         // it is not called from outside
         // sends the data to the API, and calls callback function
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then()
     },
     init: function () {
     },
@@ -102,6 +110,9 @@ export let dataHandler = {
             },
             body: JSON.stringify(card)
         })
+    },
+    deleteCard: function (card) {
+        dataHandler._api_post('/delete-card', card)
     }
 };
 // here comes more features
