@@ -96,20 +96,32 @@ function deleteElement() {
 }
 
 function allowDrop(ev) {
-  ev.preventDefault();
+    ev.preventDefault();
 }
 
 function drag(ev) {
-  ev.dataTransfer.setData("text", ev.target.id);
+    ev.dataTransfer.setData("drag-board-id", ev.target.getAttribute('data-board-id'));
+    ev.dataTransfer.setData("dragged-id", ev.target.id);
 }
 
 function drop(ev) {
-  ev.preventDefault();
-  const data = ev.dataTransfer.getData("text");
-  ev.target.appendChild(document.getElementById(data));
+    const draggedItemBoardId = ev.dataTransfer.getData("drag-board-id");
+    const targetBoardId = ev.target.getAttribute('data-board-id');
+    const data = ev.dataTransfer.getData("dragged-id");
+    if (draggedItemBoardId === targetBoardId){
+        if (ev.target.getAttribute('class') === 'board-column-content') {
+            ev.target.appendChild(document.getElementById(data));
+        } else if (ev.target.parentElement.getAttribute('class') === 'board-column-content') {
+            ev.target.parentElement.appendChild(document.getElementById(data));
+        } else if (ev.target.parentElement.parentElement.getAttribute('class') === 'board-column-content'){
+            ev.target.parentElement.parentElement.appendChild(document.getElementById(data));
+        } else if (ev.target.parentElement.parentElement.parentElement.getAttribute('class') === 'board-column-content'){
+            ev.target.parentElement.parentElement.parentElement.appendChild(document.getElementById(data));
+        }
+    }
 }
 
-function editTableSelect(tableClass){
+function editTableSelect(tableClass) {
     let table = null;
     switch (tableClass) {
         case 'board-title':
@@ -131,24 +143,25 @@ function editable() {
     this.contentEditable = 'true';
     this.addEventListener("focusout", function () {
         if (isNullOrWhiteSpace(this.innerText) === false) {
-            this.innerText = this.innerText.replace(/\s+/g," ");
+            this.innerText = this.innerText.replace(/\s+/g, " ");
             boardFunction(parseInt(this.getAttribute('data-id')), this.innerText)
         } else {
             this.innerText = oldTitle
         }
-        this.contentEditable = 'false'});
+        this.contentEditable = 'false'
+    });
     this.addEventListener("keyup", function (event) {
         if (event.keyCode === 13) {
             if (isNullOrWhiteSpace(this.innerText) === false) {
-                this.innerText = this.innerText.replace(/(\r\n|\n|\r)/gm,"");
-                this.innerText = this.innerText.replace(/\s+/g," ");
+                this.innerText = this.innerText.replace(/(\r\n|\n|\r)/gm, "");
+                this.innerText = this.innerText.replace(/\s+/g, " ");
                 boardFunction(parseInt(this.getAttribute('data-id')), this.innerText)
-            }
-            else {
+            } else {
                 this.innerText = oldTitle
             }
             this.contentEditable = 'false'
-        }});
+        }
+    });
 }
 
 function build_board(card) {
@@ -230,6 +243,7 @@ function build_column(card) {
     deleteImage.setAttribute('class', 'fas fa-trash-alt');
     let board_column_content = document.createElement('div');
     board_column_content.id = `board-column-content${card.col_id}`;
+    board_column_content.setAttribute('data-board-id', `${card.board_id}`);
     board_column_content.addEventListener('drop', drop);
     board_column_content.addEventListener('dragover', allowDrop);
     board_column_content.setAttribute('class', 'board-column-content');
@@ -306,18 +320,10 @@ export let dom = {
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
-        dataHandler.getCardsByBoardId(boardId, function (cards) {
-            dom.showCards(cards);
-        });
     },
     showCards: function (cards) {
         // shows the cards of a board
         // it adds necessary event listeners also
-        let boardcolumns = '';
-        for (let card in cards) {
-            let columns = document.querySelector(`board-columns.${card.board_id}`)
-
-        }
     },
     // here comes more features
 };

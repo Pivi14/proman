@@ -51,7 +51,7 @@ INSERT INTO cols VALUES (6, 'Testing', 2);
 INSERT INTO cols VALUES (7, 'Done', 2);
 SELECT pg_catalog.setval('cols_col_id_seq', 7, true);
 
-INSERT INTO cards VALUES (1, 1, 'New card', 0, 0);
+INSERT INTO cards VALUES (0, 1, 'New card1', 0, 0);
 INSERT INTO cards VALUES (2, 1, 'New card2', 0, 1);
 INSERT INTO cards VALUES (3, 1, 'In progress card', 1, 0);
 INSERT INTO cards VALUES (4, 1, 'Planning', 2, 0);
