@@ -95,6 +95,62 @@ function deleteElement() {
     dataHandler.deleteElement(element)
 }
 
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  const data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
+}
+
+function editTableSelect(tableClass){
+    let table = null;
+    switch (tableClass) {
+        case 'board-title':
+            table = dataHandler.changeBoardName;
+            break;
+        case 'board-column-title':
+            table = dataHandler.changeColdName;
+            break;
+        case 'card-title':
+            table = dataHandler.changeCardName;
+            break;
+    }
+    return table
+}
+
+function editable() {
+    const boardFunction = editTableSelect(this.getAttribute('class'));
+    const oldTitle = this.getAttribute('data-title');
+    this.contentEditable = 'true';
+    this.addEventListener("focusout", function () {
+        if (isNullOrWhiteSpace(this.innerText) === false) {
+            this.innerText = this.innerText.replace(/\s+/g," ");
+            boardFunction(parseInt(this.getAttribute('data-id')), this.innerText)
+        } else {
+            this.innerText = oldTitle
+        }
+        this.contentEditable = 'false'});
+    this.addEventListener("keyup", function (event) {
+        if (event.keyCode === 13) {
+            if (isNullOrWhiteSpace(this.innerText) === false) {
+                this.innerText = this.innerText.replace(/(\r\n|\n|\r)/gm,"");
+                this.innerText = this.innerText.replace(/\s+/g," ");
+                boardFunction(parseInt(this.getAttribute('data-id')), this.innerText)
+            }
+            else {
+                this.innerText = oldTitle
+            }
+            this.contentEditable = 'false'
+        }});
+}
+
 function build_board(card) {
     let create_board = document.createElement('section');
     create_board.setAttribute('class', 'board');
@@ -103,19 +159,12 @@ function build_board(card) {
     board_header.setAttribute('class', 'board-header');
     let board_title = document.createElement('span');
     board_title.setAttribute('class', 'board-title');
+    board_title.setAttribute('data-title', `${card.title}`);
+    board_title.setAttribute('data-id', `${card.board_id}`);
     board_title.id = `board${card.board_id}`;
-
-    board_title.isContentEditable;
-    board_title.contentEditable = true;
-    board_title.tabIndex = 1;
     board_title.innerText = card.title;
-    board_title.addEventListener("focusout", function () {
-        if (isNullOrWhiteSpace(board_title.innerText) === false) {
-            dataHandler.changeBoardName(parseInt(board_title.id.slice(5)), board_title.innerText)
-        } else {
-            board_title.innerText = card.title
-        }
-    });
+    board_title.addEventListener('click', editable);
+
 
     let boardAddCard = document.createElement('button');
     boardAddCard.setAttribute('class', 'board-add');
@@ -167,18 +216,10 @@ function build_column(card) {
     board_column.id = `col${card.col_id}`;
     let board_column_title = document.createElement('div');
     board_column_title.setAttribute('class', 'board-column-title');
-
-    board_column_title.isContentEditable;
-    board_column_title.contentEditable = true;
-    board_column_title.tabIndex = 1;
+    board_column_title.setAttribute('data-title', `${card.col_title}`);
+    board_column_title.setAttribute('data-id', `${card.col_id}`);
     board_column_title.innerText = card.col_title;
-    board_column_title.addEventListener("focusout", function () {
-        if (isNullOrWhiteSpace(board_column_title.innerText) === false) {
-            dataHandler.changeColdName(parseInt(card.col_id), board_column_title.innerText);
-        } else {
-            board_column_title.innerText = card.col_title;
-        }
-    });
+    board_column_title.addEventListener('click', editable);
     let deleteColumn = document.createElement('div');
     deleteColumn.setAttribute('class', 'delete-column');
     deleteColumn.setAttribute('data-id', `${card.col_id}`);
@@ -189,6 +230,8 @@ function build_column(card) {
     deleteImage.setAttribute('class', 'fas fa-trash-alt');
     let board_column_content = document.createElement('div');
     board_column_content.id = `board-column-content${card.col_id}`;
+    board_column_content.addEventListener('drop', drop);
+    board_column_content.addEventListener('dragover', allowDrop);
     board_column_content.setAttribute('class', 'board-column-content');
 
     deleteColumn.appendChild(deleteImage);
@@ -204,6 +247,11 @@ function build_card(card) {
     let individual_card = document.createElement('div');
     individual_card.setAttribute('class', 'card');
     individual_card.id = `card${card.id}`;
+    individual_card.setAttribute('data-board-id', `${card.board_id}`);
+    individual_card.setAttribute('data-col-id', `${card.col_id}`);
+    individual_card.setAttribute('data-order', `${card['order_num']}`);
+    individual_card.draggable = true;
+    individual_card.addEventListener('dragstart', drag);
     let card_remove = document.createElement('div');
     card_remove.setAttribute('class', 'card-remove');
     let image = document.createElement('i');
@@ -214,18 +262,11 @@ function build_card(card) {
     image.addEventListener('click', deleteElement);
     let card_title = document.createElement('div');
     card_title.setAttribute('class', 'card-title');
-    card_title.id = `card${card.board_id}`;
-    card_title.isContentEditable;
+    card_title.setAttribute('data-title', `${card.card_title}`);
+    card_title.setAttribute('data-id', `${card.id}`);
     card_title.innerText = card.card_title;
-    card_title.contentEditable = true;
-    card_title.tabIndex = 1;
-    card_title.addEventListener("focusout", function () {
-        if (isNullOrWhiteSpace(card_title.innerText) === false) {
-            dataHandler.changeCardName(parseInt(card_title.id.slice(4)), card_title.innerText);
-        } else {
-            card_title.innerText = card.card_title;
-        }
-    });
+    card_title.id = `card${card.board_id}`;
+    card_title.addEventListener("click", editable);
 
     card_remove.appendChild(image);
     individual_card.appendChild(card_remove);

@@ -76,7 +76,7 @@ section.board {
 
 .board-columns {
     display: grid;
-    grid-template-columns: repeat(4, 25%);
+    grid-template-columns: repeat(4, 28.7%);
 }
 
 .board-column {

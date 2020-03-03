@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, jsonify
+from flask import Flask, render_template, url_for, request
 from util import json_response
 
 import data_handler
@@ -65,11 +65,13 @@ def new_col():
     data_handler.new_col(new_col_data)
     return '', 204
 
+
 @app.route("/delete-element", methods=['POST'])
 def delete_card():
     deleted_elem = request.get_json()
     data_handler.delete_element(deleted_elem)
     return '', 204
+
 
 @app.route("/get-cards/<int:board_id>")
 @json_response
