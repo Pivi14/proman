@@ -52,6 +52,13 @@ def change_card_name():
     return '', 204
 
 
+@app.route("/update-card", methods=['POST'])
+def drop_card():
+    card_new_data = request.get_json()
+    data_handler.update_card(card_new_data)
+    return '', 204
+
+
 @app.route("/new-card", methods=['POST'])
 def new_card():
     new_card_data = request.get_json()

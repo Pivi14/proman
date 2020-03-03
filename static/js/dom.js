@@ -105,9 +105,14 @@ function drag(ev) {
 }
 
 function drop(ev) {
+    ev.preventDefault();
     const draggedItemBoardId = ev.dataTransfer.getData("drag-board-id");
     const targetBoardId = ev.target.getAttribute('data-board-id');
     const data = ev.dataTransfer.getData("dragged-id");
+    let card_data = {
+      id: parseInt(data.slice(4)),
+      col_id: parseInt(ev.target.getAttribute('data-col-id'))
+    };
     if (draggedItemBoardId === targetBoardId){
         if (ev.target.getAttribute('class') === 'board-column-content') {
             ev.target.appendChild(document.getElementById(data));
@@ -119,6 +124,7 @@ function drop(ev) {
             ev.target.parentElement.parentElement.parentElement.appendChild(document.getElementById(data));
         }
     }
+    dataHandler.updateCard(card_data)
 }
 
 function editTableSelect(tableClass) {
@@ -172,8 +178,8 @@ function build_board(card) {
     board_header.setAttribute('class', 'board-header');
     let board_title = document.createElement('span');
     board_title.setAttribute('class', 'board-title');
-    board_title.setAttribute('data-title', `${card.title}`);
-    board_title.setAttribute('data-id', `${card.board_id}`);
+    board_title.setAttribute('data-title', card.title);
+    board_title.setAttribute('data-id', card.board_id);
     board_title.id = `board${card.board_id}`;
     board_title.innerText = card.title;
     board_title.addEventListener('click', editable);
@@ -194,7 +200,7 @@ function build_board(card) {
 
     let deleteButton = document.createElement('button');
     deleteButton.setAttribute('class', 'board-toggle');
-    deleteButton.setAttribute('data-id', `${card.board_id}`);
+    deleteButton.setAttribute('data-id', card.board_id);
     deleteButton.setAttribute('data-table', 'boards');
     deleteButton.setAttribute('data-idStr', 'board');
     deleteButton.addEventListener('click', deleteElement);
@@ -203,7 +209,7 @@ function build_board(card) {
     let board_toggle = document.createElement('button');
     board_toggle.setAttribute('class', 'board-toggle');
     board_toggle.id = `toggle${card.board_id}`;
-    board_toggle.setAttribute('data-board-id', `${card.board_id}`);
+    board_toggle.setAttribute('data-board-id', card.board_id);
     board_toggle.addEventListener('click', board_close);
     let image = document.createElement('i');
     image.setAttribute('class', 'fas fa-chevron-down');
@@ -229,13 +235,13 @@ function build_column(card) {
     board_column.id = `col${card.col_id}`;
     let board_column_title = document.createElement('div');
     board_column_title.setAttribute('class', 'board-column-title');
-    board_column_title.setAttribute('data-title', `${card.col_title}`);
-    board_column_title.setAttribute('data-id', `${card.col_id}`);
+    board_column_title.setAttribute('data-title', card.col_title);
+    board_column_title.setAttribute('data-id', card.col_id);
     board_column_title.innerText = card.col_title;
     board_column_title.addEventListener('click', editable);
     let deleteColumn = document.createElement('div');
     deleteColumn.setAttribute('class', 'delete-column');
-    deleteColumn.setAttribute('data-id', `${card.col_id}`);
+    deleteColumn.setAttribute('data-id', card.col_id);
     deleteColumn.setAttribute('data-table', 'cols');
     deleteColumn.setAttribute('data-idStr', 'col');
     deleteColumn.addEventListener('click', deleteElement);
@@ -243,7 +249,8 @@ function build_column(card) {
     deleteImage.setAttribute('class', 'fas fa-trash-alt');
     let board_column_content = document.createElement('div');
     board_column_content.id = `board-column-content${card.col_id}`;
-    board_column_content.setAttribute('data-board-id', `${card.board_id}`);
+    board_column_content.setAttribute('data-board-id', card.board_id);
+    board_column_content.setAttribute('data-col-id', card.col_id);
     board_column_content.addEventListener('drop', drop);
     board_column_content.addEventListener('dragover', allowDrop);
     board_column_content.setAttribute('class', 'board-column-content');
@@ -261,23 +268,29 @@ function build_card(card) {
     let individual_card = document.createElement('div');
     individual_card.setAttribute('class', 'card');
     individual_card.id = `card${card.id}`;
-    individual_card.setAttribute('data-board-id', `${card.board_id}`);
-    individual_card.setAttribute('data-col-id', `${card.col_id}`);
-    individual_card.setAttribute('data-order', `${card['order_num']}`);
+    individual_card.setAttribute('data-board-id', card.board_id);
+    individual_card.setAttribute('data-col-id', card.col_id);
+    individual_card.setAttribute('data-order', card['order_num']);
     individual_card.draggable = true;
     individual_card.addEventListener('dragstart', drag);
     let card_remove = document.createElement('div');
     card_remove.setAttribute('class', 'card-remove');
+    card_remove.setAttribute('data-board-id', card.board_id);
+    card_remove.setAttribute('data-col-id', card.col_id);
     let image = document.createElement('i');
     image.setAttribute('class', 'fas fa-trash-alt');
-    image.setAttribute('data-id', `${card.id}`);
+    image.setAttribute('data-id', card.id);
     image.setAttribute('data-table', 'cards');
     image.setAttribute('data-idStr', 'card');
     image.addEventListener('click', deleteElement);
+    image.setAttribute('data-board-id', card.board_id);
+    image.setAttribute('data-col-id', card.col_id);
     let card_title = document.createElement('div');
     card_title.setAttribute('class', 'card-title');
-    card_title.setAttribute('data-title', `${card.card_title}`);
-    card_title.setAttribute('data-id', `${card.id}`);
+    card_title.setAttribute('data-title', card.card_title);
+    card_title.setAttribute('data-id', card.id);
+    card_title.setAttribute('data-board-id', card.board_id);
+    card_title.setAttribute('data-col-id', card.col_id);
     card_title.innerText = card.card_title;
     card_title.id = `card${card.board_id}`;
     card_title.addEventListener("click", editable);

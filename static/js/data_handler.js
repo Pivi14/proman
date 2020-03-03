@@ -81,10 +81,7 @@ export let dataHandler = {
         // the status is retrieved and then the callback function is called with the status
     },
     getCardsByBoardId: function (boardId, callback) {
-        this._api_get(`/get-cards/${boardId}`, (response) => {
-            this._data = response;
-            callback(response);
-        });
+
     },
     getCard: function (cardId, callback) {
         // the card is retrieved and then the callback function is called with the card
@@ -128,6 +125,9 @@ export let dataHandler = {
             .then(function () {
                 callback()
             })
+    },
+    updateCard: function (card) {
+        dataHandler._api_post('/update-card', card)
     }
 };
 // here comes more features

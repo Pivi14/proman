@@ -13,10 +13,8 @@ def get_card_status(status_id):
 
 
 def new_board(title):
-    print(title)
     sql_querries.create_board(title)
     new_board_id = sql_querries.get_id_of_new_board()
-    print(new_board_id)
     sql_querries.add_four_static_cols_to_new_board(new_board_id['max'])
 
 
@@ -74,3 +72,12 @@ def get_cards_for_board(board_id):
             card['status_id'] = get_card_status(card['status_id'])  # Set textual status for the card
             matching_cards.append(card)
     return matching_cards
+
+
+def update_card(card_data):
+    order_num = sql_querries.get_order_num_by_col_id(card_data['col_id'])
+    if order_num is not None:
+        card_data['order_num'] = order_num['order_num'] + 1
+    else:
+        card_data['order_num'] = 0
+    sql_querries.update_card(card_data)

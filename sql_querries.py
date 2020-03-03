@@ -1,5 +1,4 @@
 import database_common
-import psycopg2
 
 
 @database_common.connection_handler
@@ -143,3 +142,30 @@ def delete_table(cursor, data):
                     DELETE FROM cols WHERE board_id = %(id)s;
                     DELETE FROM boards WHERE board_id = %(id)s""",
                    {'id': data['id']})
+
+
+@database_common.connection_handler
+def get_order_num_by_col_id(cursor, col_id):
+    cursor.execute("""
+                    SELECT order_num
+                    FROM cards
+                    WHERE col_id = %(col_id)s
+                    ORDER BY order_num DESC
+                    LIMIT 1
+    """, {
+        'col_id': col_id
+    })
+    return cursor.fetchone()
+
+
+@database_common.connection_handler
+def update_card(cursor, data):
+    cursor.execute("""
+                    UPDATE cards
+                    SET col_id = %(col_id)s, order_num = %(order_num)s
+                    WHERE id = %(card_id)s
+    """, {
+        'col_id': data['col_id'],
+        'order_num': data['order_num'],
+        'card_id': data['id']
+    })
