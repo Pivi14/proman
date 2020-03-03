@@ -26,7 +26,9 @@ export let dataHandler = {
             },
             body: JSON.stringify(data)
         })
-            .then()
+            .then(function () {
+                callback()
+            })
     },
     init: function () {
     },
@@ -45,33 +47,15 @@ export let dataHandler = {
     },
     changeBoardName: function (id, boardname) {
         let changed_name = {id: id, boardname: boardname};
-        fetch('/change-board-name', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(changed_name)
-        })
+        dataHandler._api_post('/change-board-name', changed_name)
     },
     changeColdName(col_id, col_title) {
         let id_title = {col_id: col_id, col_title: col_title};
-        fetch('change-col-name', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(id_title)
-        })
+        dataHandler._api_post('/change-col-name', id_title)
     },
     changeCardName(card_id, card_title){
         let id_title = {id: card_id, card_title:card_title};
-        fetch('/change-card-name', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(id_title)
-        })
+        dataHandler._api_post('/change-card-name', id_title)
     },
     getStatuses: function (callback) {
         // the statuses are retrieved and then the callback function is called with the statuses
@@ -87,44 +71,17 @@ export let dataHandler = {
         // the card is retrieved and then the callback function is called with the card
     },
     createNewBoard: function (boardTitle, callback) {
-        fetch('/new-board', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(boardTitle)
-        })
-            .then(function () {
-                callback();
-            });
+        dataHandler._api_post('/new-board', boardTitle, callback)
     },
     createNewCard: function (card, callback) {
         // creates new card, saves it and calls the callback function with its data
-        fetch('/new-card', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(card)
-        })
-            .then(function () {
-                callback();
-            })
+        dataHandler._api_post('/new-card', card, callback)
     },
     deleteElement: function (card) {
         dataHandler._api_post('/delete-element', card)
     },
     createNewCol: function (col, callback) {
-        fetch('/new-col', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(col)
-        })
-            .then(function () {
-                callback()
-            })
+        dataHandler._api_post('/new-col', col, callback)
     },
     updateCard: function (card) {
         dataHandler._api_post('/update-card', card)
