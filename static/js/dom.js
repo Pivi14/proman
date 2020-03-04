@@ -110,17 +110,17 @@ function drop(ev) {
     const targetBoardId = ev.target.getAttribute('data-board-id');
     const data = ev.dataTransfer.getData("dragged-id");
     let card_data = {
-      id: parseInt(data.slice(4)),
-      col_id: parseInt(ev.target.getAttribute('data-col-id'))
+        id: parseInt(data.slice(4)),
+        col_id: parseInt(ev.target.getAttribute('data-col-id'))
     };
-    if (draggedItemBoardId === targetBoardId){
+    if (draggedItemBoardId === targetBoardId) {
         if (ev.target.getAttribute('class') === 'board-column-content') {
             ev.target.appendChild(document.getElementById(data));
         } else if (ev.target.parentElement.getAttribute('class') === 'board-column-content') {
             ev.target.parentElement.appendChild(document.getElementById(data));
-        } else if (ev.target.parentElement.parentElement.getAttribute('class') === 'board-column-content'){
+        } else if (ev.target.parentElement.parentElement.getAttribute('class') === 'board-column-content') {
             ev.target.parentElement.parentElement.appendChild(document.getElementById(data));
-        } else if (ev.target.parentElement.parentElement.parentElement.getAttribute('class') === 'board-column-content'){
+        } else if (ev.target.parentElement.parentElement.parentElement.getAttribute('class') === 'board-column-content') {
             ev.target.parentElement.parentElement.parentElement.appendChild(document.getElementById(data));
         }
     }
@@ -157,7 +157,7 @@ function editable() {
         this.contentEditable = 'false'
     });
     this.addEventListener("keyup", function (event) {
-        if (event.keyCode === 13) {
+        if (event.key === 'Enter') {
             if (isNullOrWhiteSpace(this.innerText) === false) {
                 this.innerText = this.innerText.replace(/(\r\n|\n|\r)/gm, "");
                 this.innerText = this.innerText.replace(/\s+/g, " ");

@@ -74,10 +74,54 @@ def get_cards_for_board(board_id):
     return matching_cards
 
 
+def check_card_id(card_list, card):
+    for one_card in card_list:
+        if card['id'] == one_card['id']:
+            return True
+    return False
+
+
 def update_card(card_data):
     order_num = sql_querries.get_order_num_by_col_id(card_data['col_id'])
+    order_range = list(range(len(order_num)))
+    order_range.reverse()
+    order_data = []
+    old_column = 0
+    old_data_reorder = True
     if order_num is not None:
-        card_data['order_num'] = order_num['order_num'] + 1
+        if check_card_id(order_num, card_data):
+            old_data_reorder = False
+            new_data = {
+                'id': card_data['id'],
+                'col_id': card_data['col_id'],
+                'order_num': len(order_num) - 1
+            }
+            order_data.append(new_data)
+            for order in order_range:
+                if card_data['id'] == order_num[order]['id']:
+                    continue
+                else:
+                    new_data = {
+                        'id': order_num[order]['id'],
+                        'col_id': card_data['col_id'],
+                        'order_num': order - 1
+                    }
+                order_data.append(new_data)
+        else:
+            card_data['order_num'] = len(order_num)
+            order_data.append(card_data)
+            old_column = sql_querries.old_column(card_data['id'])
     else:
         card_data['order_num'] = 0
-    sql_querries.update_card(card_data)
+        order_data.append(card_data)
+        old_column = sql_querries.old_column(card_data['id'])
+
+    sql_querries.update_card(order_data)
+    print('OK1')
+    if old_data_reorder:
+        card_from_old_col = sql_querries.all_data_from_col(old_column['col_id'])
+        print(card_from_old_col)
+        for index in range(len(card_from_old_col)):
+            card_from_old_col[index]['order_num'] = index
+        sql_querries.update_card(card_from_old_col)
+        print('OK2')

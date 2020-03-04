@@ -147,25 +147,43 @@ def delete_table(cursor, data):
 @database_common.connection_handler
 def get_order_num_by_col_id(cursor, col_id):
     cursor.execute("""
-                    SELECT order_num
+                    SELECT id, order_num
                     FROM cards
                     WHERE col_id = %(col_id)s
-                    ORDER BY order_num DESC
-                    LIMIT 1
+                    ORDER BY order_num 
     """, {
         'col_id': col_id
     })
+    return cursor.fetchall()
+
+
+@database_common.connection_handler
+def old_column(cursor, card_id):
+    cursor.execute("""
+                    SELECT col_id 
+                    FROM cards
+                    WHERE id = %(id)s""", {'id': card_id})
     return cursor.fetchone()
 
 
 @database_common.connection_handler
-def update_card(cursor, data):
+def all_data_from_col(cursor, col_id):
     cursor.execute("""
-                    UPDATE cards
-                    SET col_id = %(col_id)s, order_num = %(order_num)s
-                    WHERE id = %(card_id)s
-    """, {
-        'col_id': data['col_id'],
-        'order_num': data['order_num'],
-        'card_id': data['id']
-    })
+                    SELECT id, col_id, order_num
+                    FROM cards
+                    WHERE col_id = %(col_id)s""", {'col_id': col_id})
+    return cursor.fetchall()
+
+
+@database_common.connection_handler
+def update_card(cursor, datas):
+    for data in datas:
+        cursor.execute("""
+                        UPDATE cards
+                        SET col_id = %(col_id)s, order_num = %(order_num)s
+                        WHERE id = %(card_id)s
+        """, {
+            'col_id': data['col_id'],
+            'order_num': data['order_num'],
+            'card_id': data['id']
+        })
