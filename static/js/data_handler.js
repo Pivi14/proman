@@ -30,8 +30,6 @@ export let dataHandler = {
                 callback()
             })
     },
-    init: function () {
-    },
     getBoards: function (callback) {
         // the boards are retrieved and then the callback function is called with the boards
 
@@ -41,9 +39,6 @@ export let dataHandler = {
             this._data = response;
             callback(response);
         });
-    },
-    getBoard: function (boardId, callback) {
-        // the board is retrieved and then the callback function is called with the board
     },
     changeBoardName: function (id, boardname) {
         let changed_name = {id: id, boardname: boardname};
@@ -56,19 +51,6 @@ export let dataHandler = {
     changeCardName(card_id, card_title){
         let id_title = {id: card_id, card_title:card_title};
         dataHandler._api_post('/change-card-name', id_title)
-    },
-    getStatuses: function (callback) {
-        // the statuses are retrieved and then the callback function is called with the statuses
-    }
-    ,
-    getStatus: function (statusId, callback) {
-        // the status is retrieved and then the callback function is called with the status
-    },
-    getCardsByBoardId: function (boardId, callback) {
-
-    },
-    getCard: function (cardId, callback) {
-        // the card is retrieved and then the callback function is called with the card
     },
     createNewBoard: function (boardTitle, callback) {
         dataHandler._api_post('/new-board', boardTitle, callback)

@@ -331,14 +331,7 @@ export let dom = {
 
         }
     },
-    loadCards: function (boardId) {
-        // retrieves cards and makes showCards called
-    },
-    showCards: function (cards) {
-        // shows the cards of a board
-        // it adds necessary event listeners also
-    },
-    // here comes more features
+
 };
 
 
