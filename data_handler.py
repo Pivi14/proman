@@ -48,7 +48,9 @@ def change_card_title(id_title):
 
 def delete_element(element):
     if element['table'] == 'cards':
+        old_column = sql_querries.old_column(element['id'])
         sql_querries.delete_card(element)
+        check_order_num(old_column, True)
     elif element['table'] == 'cols':
         sql_querries.delete_column(element)
     elif element['table'] == 'boards':
@@ -86,7 +88,6 @@ def update_card(card_data):
     order_range = list(range(len(order_num)))
     order_range.reverse()
     order_data = []
-    old_column = 0
     old_data_reorder = True
     if order_num is not None:
         if check_card_id(order_num, card_data):
@@ -110,18 +111,18 @@ def update_card(card_data):
         else:
             card_data['order_num'] = len(order_num)
             order_data.append(card_data)
-            old_column = sql_querries.old_column(card_data['id'])
     else:
         card_data['order_num'] = 0
         order_data.append(card_data)
-        old_column = sql_querries.old_column(card_data['id'])
 
+    old_column = sql_querries.old_column(card_data['id'])
     sql_querries.update_card(order_data)
-    print('OK1')
+    check_order_num(old_column, old_data_reorder)
+
+
+def check_order_num(old_column, old_data_reorder):
     if old_data_reorder:
         card_from_old_col = sql_querries.all_data_from_col(old_column['col_id'])
-        print(card_from_old_col)
         for index in range(len(card_from_old_col)):
             card_from_old_col[index]['order_num'] = index
         sql_querries.update_card(card_from_old_col)
-        print('OK2')
