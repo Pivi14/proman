@@ -38,8 +38,8 @@ CREATE TABLE public.cards (
     FOREIGN KEY (col_id) REFERENCES cols(col_id)
 );
 
-INSERT INTO boards VALUES (1, 'Board 1', TRUE);
-INSERT INTO boards VALUES (2, 'Board 2', TRUE);
+INSERT INTO boards VALUES (1, 'Board 1', FALSE);
+INSERT INTO boards VALUES (2, 'Board 2', FALSE);
 SELECT pg_catalog.setval('boards_board_id_seq', 2, true);
 
 INSERT INTO cols VALUES (0, 'New', 1);
