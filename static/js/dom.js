@@ -57,7 +57,7 @@ function board_close() {
         document.getElementById(`chevron-image${board_id}`).classList.remove('fa-chevron-down');
         document.getElementById(`chevron-image${board_id}`).classList.add('fa-chevron-up');
         document.getElementById(`toggle${board_id}`).removeEventListener('click', board_close);
-        document.getElementById(`toggle${board_id}`).addEventListener('click', board_open)
+        document.getElementById(`toggle${board_id}`).addEventListener('click', board_open);
         dataHandler.updateOpenClose(newData)
     }
 }
@@ -204,17 +204,15 @@ function build_board(card) {
     board_toggle.setAttribute('class', 'board-toggle');
     board_toggle.id = `toggle${card.board_id}`;
     board_toggle.setAttribute('data-board-id', card.board_id);
-    if (card['open_board'] === true){
+    if (card['open_board'] === true) {
         board_toggle.addEventListener('click', board_close);
-    }
-    else{
+    } else {
         board_toggle.addEventListener('click', board_open);
     }
     let image = document.createElement('i');
-    if (card['open_board'] === true){
+    if (card['open_board'] === true) {
         image.setAttribute('class', 'fas fa-chevron-down');
-    }
-    else{
+    } else {
         image.setAttribute('class', 'fas fa-chevron-up');
     }
     image.id = `chevron-image${card.board_id}`;
@@ -331,11 +329,11 @@ export let dom = {
             if (cards === null && card.id !== null) {
                 build_card(card);
             }
-            if (card['open_board'] === false){
+            if (card['open_board'] === false) {
                 const boardColumns = document.getElementById(`board-columns${card.board_id}`);
                 boardColumns.style.height = '0px';
                 const elements = boardColumns.childNodes;
-                for (let element of elements){
+                for (let element of elements) {
                     element.style.display = 'none'
                 }
             }
