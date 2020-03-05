@@ -42,15 +42,18 @@ export let dataHandler = {
     },
     changeBoardName: function (id, boardname) {
         let changed_name = {id: id, boardname: boardname};
-        dataHandler._api_post('/change-board-name', changed_name)
+        dataHandler._api_post('/change-board-name', changed_name, () => {
+        })
     },
     changeColdName(col_id, col_title) {
         let id_title = {col_id: col_id, col_title: col_title};
-        dataHandler._api_post('/change-col-name', id_title)
+        dataHandler._api_post('/change-col-name', id_title, () => {
+        })
     },
-    changeCardName(card_id, card_title){
-        let id_title = {id: card_id, card_title:card_title};
-        dataHandler._api_post('/change-card-name', id_title)
+    changeCardName(card_id, card_title) {
+        let id_title = {id: card_id, card_title: card_title};
+        dataHandler._api_post('/change-card-name', id_title, () => {
+        })
     },
     createNewBoard: function (boardTitle, callback) {
         dataHandler._api_post('/new-board', boardTitle, callback)
@@ -60,13 +63,19 @@ export let dataHandler = {
         dataHandler._api_post('/new-card', card, callback)
     },
     deleteElement: function (card) {
-        dataHandler._api_post('/delete-element', card)
+        dataHandler._api_post('/delete-element', card, () => {
+        })
     },
     createNewCol: function (col, callback) {
         dataHandler._api_post('/new-col', col, callback)
     },
     updateCard: function (card) {
-        dataHandler._api_post('/update-card', card)
+        dataHandler._api_post('/update-card', card, () => {
+        })
+    },
+    updateOpenClose: function (data) {
+        dataHandler._api_post('/update-open-close', data, () => {
+        })
     }
 };
 // here comes more features

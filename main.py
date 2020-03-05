@@ -80,6 +80,13 @@ def delete_card():
     return '', 204
 
 
+@app.route("/update-open-close", methods=['POST'])
+def update_open_close():
+    data = request.get_json()
+    data_handler.update_open_close(data)
+    return '', 204
+
+
 @app.route("/get-cards/<int:board_id>")
 @json_response
 def get_cards_for_board(board_id: int):

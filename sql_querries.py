@@ -4,7 +4,7 @@ import database_common
 @database_common.connection_handler
 def get_boards(cursor):
     cursor.execute("""
-                    SELECT boards.board_id, boards.title, cols.col_id, cols.col_title, cards.id,
+                    SELECT boards.board_id, boards.title, boards.open_board, cols.col_id, cols.col_title, cards.id,
                      cards.card_title, cards.order_num
                     FROM boards
                     FULL JOIN cols ON  cols.board_id = boards.board_id
@@ -16,10 +16,11 @@ def get_boards(cursor):
 
 
 @database_common.connection_handler
-def create_board(cursor, title):
+def create_board(cursor, data):
     cursor.execute("""                  
-                   INSERT INTO boards(title) VALUES (%(title)s) """,
-                   {'title': title}
+                   INSERT INTO boards(title, open_board) VALUES (%(title)s, %(open)s) """,
+                   {'title': data['title'],
+                    'open': data['boolean']}
                    )
 
 
@@ -118,6 +119,16 @@ def change_card_name(cursor, id_title):
                     WHERE id = %(id)s""",
                    {'changed_name': id_title['card_title'],
                     'id': id_title['id']})
+
+
+@database_common.connection_handler
+def change_open_close(cursor, data):
+    cursor.execute("""
+                    UPDATE boards
+                    SET open_board = %(boolean)s
+                    WHERE board_id = %(id)s
+                    """, {'boolean': data['boolean'],
+                          'id': data['id']})
 
 
 @database_common.connection_handler

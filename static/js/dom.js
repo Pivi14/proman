@@ -37,52 +37,46 @@ function isNullOrWhiteSpace(str) {
     return (!str || str.length === 0 || /^\s*$/.test(str))
 }
 
+function changeDisplay(elements, display_change) {
+    for (let element of elements) {
+        element.style.display = display_change
+    }
+}
+
 function board_close() {
     let board_id = this.getAttribute('data-board-id');
     let board_columns = document.getElementById(`board-columns${board_id}`);
-    let board_columns_height = board_columns.offsetHeight;
-    board_columns.setAttribute('data-board-height', `${board_columns_height}`);
     let elements = board_columns.childNodes;
     if (elements.length !== 0) {
-        board_columns.animate([
-            {height: `${board_columns_height}px`},
-            {height: "0px"}
-        ], {
-            duration: 500
-        });
-        setTimeout(function () {
-            for (let element of elements) {
-                element.style.display = 'none'
-            }
-        }, 100);
+        board_columns.style.height = '0px';
+        changeDisplay(elements, 'none');
+        const newData = {
+            id: board_id,
+            boolean: false
+        };
         document.getElementById(`chevron-image${board_id}`).classList.remove('fa-chevron-down');
         document.getElementById(`chevron-image${board_id}`).classList.add('fa-chevron-up');
         document.getElementById(`toggle${board_id}`).removeEventListener('click', board_close);
         document.getElementById(`toggle${board_id}`).addEventListener('click', board_open)
+        dataHandler.updateOpenClose(newData)
     }
 }
 
 function board_open() {
     let board_id = parseInt(this.dataset.boardId);
     let board_columns = document.getElementById(`board-columns${board_id}`);
-    let board_columns_height = board_columns.getAttribute('data-board-height');
     let elements = board_columns.childNodes;
-    board_columns.animate([
-        {height: "0px"},
-        {height: `${board_columns_height}px`}
-    ], {
-        duration: 500
-    });
-    setTimeout(function () {
-        for (let element of elements) {
-            element.style.display = 'block'
-        }
-    }, 400);
+    board_columns.style.height = 'auto';
+    changeDisplay(elements, 'block');
+    const newData = {
+        id: board_id,
+        boolean: true
+    };
     document.getElementById(`chevron-image${board_id}`).classList.remove('fa-chevron-up');
     document.getElementById(`chevron-image${board_id}`).classList.add('fa-chevron-down');
     document.getElementById(`toggle${board_id}`).removeEventListener('click', board_open);
-    document.getElementById(`toggle${board_id}`).addEventListener('click', board_close)
-
+    document.getElementById(`toggle${board_id}`).addEventListener('click', board_close);
+    dataHandler.updateOpenClose(newData)
 }
 
 function deleteElement() {
@@ -210,9 +204,19 @@ function build_board(card) {
     board_toggle.setAttribute('class', 'board-toggle');
     board_toggle.id = `toggle${card.board_id}`;
     board_toggle.setAttribute('data-board-id', card.board_id);
-    board_toggle.addEventListener('click', board_close);
+    if (card['open_board'] === true){
+        board_toggle.addEventListener('click', board_close);
+    }
+    else{
+        board_toggle.addEventListener('click', board_open);
+    }
     let image = document.createElement('i');
-    image.setAttribute('class', 'fas fa-chevron-down');
+    if (card['open_board'] === true){
+        image.setAttribute('class', 'fas fa-chevron-down');
+    }
+    else{
+        image.setAttribute('class', 'fas fa-chevron-up');
+    }
     image.id = `chevron-image${card.board_id}`;
     let board_columns = document.createElement('div');
     board_columns.id = `board-columns${card.board_id}`;
@@ -326,6 +330,14 @@ export let dom = {
             let cards = document.getElementById(`card${card.id}`);
             if (cards === null && card.id !== null) {
                 build_card(card);
+            }
+            if (card['open_board'] === false){
+                const boardColumns = document.getElementById(`board-columns${card.board_id}`);
+                boardColumns.style.height = '0px';
+                const elements = boardColumns.childNodes;
+                for (let element of elements){
+                    element.style.display = 'none'
+                }
             }
 
 

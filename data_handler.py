@@ -13,7 +13,9 @@ def get_card_status(status_id):
 
 
 def new_board(title):
-    sql_querries.create_board(title)
+    data = {'title': title,
+            'boolean': False}
+    sql_querries.create_board(data)
     new_board_id = sql_querries.get_id_of_new_board()
     sql_querries.add_four_static_cols_to_new_board(new_board_id['max'])
 
@@ -126,3 +128,7 @@ def check_order_num(old_column, old_data_reorder):
         for index in range(len(card_from_old_col)):
             card_from_old_col[index]['order_num'] = index
         sql_querries.update_card(card_from_old_col)
+
+
+def update_open_close(data):
+    sql_querries.change_open_close(data)
